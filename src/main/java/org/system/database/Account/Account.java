@@ -7,7 +7,17 @@ public class Account {
     private String password;
     private String userRole;
     private String status;
-    private int isVerfified;
+    private boolean isVerfified;
+
+
+    public Account(int id, String name, String mail, String userRole, String status, boolean isVerfified) {
+        this.id = id;
+        this.name = name;
+        this.mail = mail;
+        this.userRole = userRole;
+        this.status = status;
+        this.isVerfified = isVerfified;
+    }
 
 
     public Account(String name, String mail, String password, String userRole, String status) {
@@ -18,7 +28,7 @@ public class Account {
         this.status = status;
     }
 
-    public Account(int id, String name, String mail, String password, String userRole, String status, int isVerfified) {
+    public Account(int id, String name, String mail, String password, String userRole, String status, boolean isVerfified) {
         this.id = id;
         this.name = name;
         this.mail = mail;
@@ -52,8 +62,11 @@ public class Account {
         return status;
     }
 
-    public int getVerificationStatus() {
-        return isVerfified;
+    public boolean getVerificationStatus() {
+        if (isVerfified) {
+            return true;
+        }
+        return false;
     }
 
     public void setName(String name) {
@@ -82,8 +95,8 @@ public class Account {
         AccountDatabase.updateAccount(this);
     }
 
-    public void setisVerfified(int isVerfified) {
-        this.isVerfified = isVerfified;
+    public void verify() {
+        this.isVerfified = true;
         AccountDatabase.verifyAccount(this);
     }
 
@@ -95,7 +108,7 @@ public class Account {
     @Override
     public String toString() {
         String verificationStatus;
-        if (isVerfified == 1) {
+        if (isVerfified) {
             verificationStatus = "Verified";
         } else {
             verificationStatus = "Not Verified";

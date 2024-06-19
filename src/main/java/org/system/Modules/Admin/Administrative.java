@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Administrative {
-    public static void addUser(String name, String mail, String password, String userRole, String status) {
+    public static void addUser(Account account) {
         try {
-            Account newAccount = new Account(name, mail, password, userRole, status);
-            AccountDatabase.insertAccount(newAccount);
+            AccountDatabase.insertAccount(account);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -22,14 +21,9 @@ public class Administrative {
         AccountDatabase.deleteAccount(email);
     }
 
-    public static void updateUser(String name, String mail, String password, String userRole, String status, int accountId) {
+    public static void updateUser(Account account) {
         try {
-            // Create an Account object with the updated information
-            Account updatedAccount = new Account(name, mail, password, userRole, status);
-            updatedAccount.setId(accountId); // Set the ID for the updated account
-
-            // Use the AccountDatabase to update the account
-            AccountDatabase.updateAccount(updatedAccount);
+            AccountDatabase.updateAccount(account);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -60,12 +54,13 @@ public class Administrative {
         }
     }
 
-    public static void getUserById(String id) {
+    public static Account getUserById(String id) {
         List<Account> accounts = AccountDatabase.searchAccounts("id", id);
         System.out.printf("\n----------------id = %s----------------\n", id);
         for (Account account : accounts) {
             System.out.println(account.toString());
         }
+        return null;
     }
 
     public static void getUserByName(String name) {

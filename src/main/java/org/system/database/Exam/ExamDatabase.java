@@ -44,14 +44,12 @@ public class ExamDatabase extends Database {
     public static void insertExam(Exam exam) {
         String checkSql = "SELECT subject_name FROM Subjects WHERE subject_id = ?";
         String insertSql = "INSERT INTO exam (exam_subject, subject_id, ids_of_who_joined, answers, grades, exam, duration) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String updateSql = "UPDATE exam SET exam = ? WHERE id = ?";
         Integer subject_id = exam.getSubjectID();
-        HashMap<Integer, HashMap<Integer, Integer>> subjectAnswers = exam.getAnswers();
-        HashMap<Integer, Integer> subjectGrades = exam.getGrades();
         ArrayList<Integer> idsOfWhoJoined = exam.getIdsOfWhoJoined();
         HashMap<Integer, HashMap<Integer, Integer>> answers = exam.getAnswers();
         HashMap<Integer, Integer> grades = exam.getGrades();
         int duration = exam.getDuration();
-
 
         try {
             openConnection();
@@ -62,17 +60,38 @@ public class ExamDatabase extends Database {
                 try (ResultSet rs = checkStmt.executeQuery()) {
                     if (rs.next()) {
                         String subject = rs.getString("subject_name");
-                        byte[] serializedObject = serializeObject(exam);
-                        // subject_id exists and subject name is fetched, proceed with the insertion
-                        try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
+
+                        // Insert the exam without the serialized object
+                        try (PreparedStatement insertStmt = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
                             insertStmt.setString(1, subject);
                             insertStmt.setInt(2, subject_id);
                             insertStmt.setString(3, idsOfWhoJoined.toString());
                             insertStmt.setString(4, answers.toString());
                             insertStmt.setString(5, grades.toString());
-                            insertStmt.setBytes(6, serializedObject);
+                            insertStmt.setBytes(6, null); // Placeholder for serialized object
                             insertStmt.setInt(7, duration); // Set duration parameter
                             insertStmt.executeUpdate();
+
+                            // Retrieve the generated key
+                            try (ResultSet generatedKeys = insertStmt.getGeneratedKeys()) {
+                                if (generatedKeys.next()) {
+                                    int examId = generatedKeys.getInt(1);
+                                    // Set the generated exam ID in the Exam object
+                                    exam.setId(examId);
+
+                                    // Serialize the updated Exam object
+                                    byte[] serializedObject = serializeObject(exam);
+
+                                    // Update the database entry with the serialized object
+                                    try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                                        updateStmt.setBytes(1, serializedObject);
+                                        updateStmt.setInt(2, examId);
+                                        updateStmt.executeUpdate();
+                                    }
+                                } else {
+                                    throw new SQLException("Creating exam failed, no ID obtained.");
+                                }
+                            }
                         }
                     } else {
                         // subject_id does not exist, handle the error
@@ -82,6 +101,71 @@ public class ExamDatabase extends Database {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public static void updateExam(int examId, Exam exam) {
+        String updateSql = "UPDATE exam SET exam_subject = ?, subject_id = ?, ids_of_who_joined = ?, answers = ?, grades = ?, exam = ?, duration = ? WHERE id = ?";
+        Integer subject_id = exam.getSubjectID();
+        ArrayList<Integer> idsOfWhoJoined = exam.getIdsOfWhoJoined();
+        HashMap<Integer, HashMap<Integer, Integer>> answers = exam.getAnswers();
+        HashMap<Integer, Integer> grades = exam.getGrades();
+        int duration = exam.getDuration();
+
+        try {
+            openConnection();
+
+            // Check if the subject_id exists in the subject table and fetch the subject name
+            String checkSql = "SELECT subject_name FROM Subjects WHERE subject_id = ?";
+            try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
+                checkStmt.setInt(1, subject_id);
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next()) {
+                        String subject = rs.getString("subject_name");
+
+                        // Serialize the Exam object
+                        byte[] serializedObject = serializeObject(exam);
+
+                        // Update the exam in the database
+                        try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                            updateStmt.setString(1, subject);
+                            updateStmt.setInt(2, subject_id);
+                            updateStmt.setString(3, idsOfWhoJoined.toString());
+                            updateStmt.setString(4, answers.toString());
+                            updateStmt.setString(5, grades.toString());
+                            updateStmt.setBytes(6, serializedObject);
+                            updateStmt.setInt(7, duration);
+                            updateStmt.setInt(8, examId);
+                            updateStmt.executeUpdate();
+                        }
+                    } else {
+                        // subject_id does not exist, handle the error
+                        System.out.println("Error: subject_id " + subject_id + " does not exist in the Subjects table.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public static void deleteExam(int exam_id) {
+        openConnection();
+        String sql = "DELETE FROM exam WHERE exam_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, exam_id);
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Exam deleted successfully.");
+            } else {
+                System.out.println("No account found with the provided email.");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         } finally {
             closeConnection();
         }
@@ -144,37 +228,4 @@ public class ExamDatabase extends Database {
         return exams;
     }
 
-
-    public static void main(String[] args) {
-        ExamDatabase db = new ExamDatabase();
-        ArrayList<Integer> idsOfWhoJoined = new ArrayList<>();
-        idsOfWhoJoined.add(1);
-        idsOfWhoJoined.add(2);
-        idsOfWhoJoined.add(3);
-        HashMap<Integer, HashMap<Integer, Integer>> answers = new HashMap<>();
-        HashMap<Integer, Integer> ahh = new HashMap<>();
-        ahh.put(1, 1);
-        ahh.put(2, 1);
-        answers.put(1, ahh);
-        HashMap<Integer, Integer> grades = new HashMap<>();
-        grades.put(1, 1);
-        grades.put(2, 2);
-        Exam exam = new Exam(1, "math", idsOfWhoJoined, answers, grades, 10);
-        Question question = new Question("Whats my name");
-        Question question2 = new Question("Whats my name");
-        Option option1 = new Option("Adham");
-        Option option2 = new Option("Youssef");
-        question.addOption(option1);
-        question.addOption(option2);
-        question2.addOption(option1);
-        question2.addOption(option2);
-        exam.addQuestion(question);
-        exam.addQuestion(question2);
-//        insertExam(exam);
-
-
-        getExamsBySubjectId(1).get(1).printExamDetails();
-
-
-    }
 }

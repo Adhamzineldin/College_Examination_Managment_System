@@ -5,6 +5,7 @@ import org.system.database.Database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static org.system.Modules.User.TitleCase.toTitleCase;
 
@@ -30,7 +31,7 @@ public class AccountDatabase extends Database {
                     + "mail TEXT NOT NULL UNIQUE,"
                     + "password TEXT NOT NULL,"
                     + "userRole TEXT NOT NULL,"
-                    + "isVerified BOOLEAN NOT NULL DEFAULT 0,"
+                    + "isVerified BOOLEAN NOT NULL DEFAULT false,"
                     + "status TEXT NOT NULL)";
 
             try (Statement stmt = connection.createStatement()) {
@@ -195,17 +196,19 @@ public class AccountDatabase extends Database {
         return true;
     }
 
-    public static String checkLogin(String mail, String password) {
+    public static Account checkLogin(String mail, String password) {
         openConnection();
         mail = toTitleCase(mail);
         ;
-        String sql = "SELECT userRole FROM Accounts WHERE mail = ? AND password = ?";
+        String sql = "SELECT * FROM Accounts WHERE mail = ? AND password = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, mail);
             pstmt.setString(2, password);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getString("userRole");
+                    return new Account(rs.getInt("id"), rs.getString("name"), rs.getString("mail"),
+                            rs.getString("password"), rs.getString("userRole"),
+                            rs.getString("status"), rs.getBoolean("isVerified"));
                 }
             }
         } catch (SQLException e) {
@@ -251,7 +254,7 @@ public class AccountDatabase extends Database {
     public static List<Account> searchAccounts(String searchField, String searchValue) {
         openConnection();
         List<Account> accounts = new ArrayList<>();
-        searchValue = toTitleCase(searchValue);
+        searchValue = searchValue.toLowerCase(Locale.ROOT);
         String sql = "SELECT * FROM Accounts WHERE " + searchField + " = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, searchValue);
@@ -263,7 +266,7 @@ public class AccountDatabase extends Database {
                     String password = rs.getString("password");
                     String userRole = rs.getString("userRole");
                     String status = rs.getString("status");
-                    int verificationStatus = rs.getInt("isVerified");
+                    boolean verificationStatus = rs.getBoolean("isVerified");
 
                     Account account = new Account(id, name, mail, password, userRole, status, verificationStatus);
                     accounts.add(account);
@@ -292,7 +295,7 @@ public class AccountDatabase extends Database {
                 String password = rs.getString("password");
                 String userRole = rs.getString("userRole");
                 String status = rs.getString("status");
-                int verificationStatus = rs.getInt("isVerified");
+                boolean verificationStatus = rs.getBoolean("isVerified");
 
                 Account account = new Account(id, name, mail, password, userRole, status, verificationStatus);
                 accounts.add(account);
