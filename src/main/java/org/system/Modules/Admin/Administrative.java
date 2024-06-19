@@ -54,11 +54,14 @@ public class Administrative {
         }
     }
 
-    public static Account getUserById(String id) {
+    public static Account getUserById(String id, String userRole) {
         List<Account> accounts = AccountDatabase.searchAccounts("id", id);
         System.out.printf("\n----------------id = %s----------------\n", id);
         for (Account account : accounts) {
-            System.out.println(account.toString());
+            if (!AccountDatabase.isIdWithRoleNotPresent(account.getId(), userRole)) {
+                System.out.println(account.toString());
+                return account;
+            }
         }
         return null;
     }
@@ -74,6 +77,11 @@ public class Administrative {
     public static void createSubject(String subject_name, int lecturer_id, ArrayList<Integer> student_ids) {
         Subject subject = new Subject(subject_name, lecturer_id, student_ids);
         SubjectDatabase.addSubject(subject);
+
+    }
+
+    public static void removeSubject(int subject_id) {
+        SubjectDatabase.deleteSubject(subject_id);
     }
 
     public static void changeSubjectLecturer(int subject_id, int lecturer_id) throws IllegalArgumentException {
@@ -87,9 +95,12 @@ public class Administrative {
 
     }
 
-    public static void add_student(int subject_id, int student_id) {
+    public static void add_student(int subject_id, int student_id) throws IllegalArgumentException {
         Subject subject = SubjectDatabase.getSubjectById(subject_id);
         if (subject != null) {
+            if (AccountDatabase.isIdWithRoleNotPresent(student_id, "student")) {
+                throw new IllegalArgumentException("This student id does not exist");
+            }
             subject.addStudent_id(student_id);
             SubjectDatabase.updateSubject(subject);
         } else {

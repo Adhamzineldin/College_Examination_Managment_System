@@ -64,5 +64,9 @@ public class Subject {
         SubjectDatabase.updateSubject(this);
     }
 
+    public void printSubject() {
+        System.out.println("Subject Name: " + subject_name + " Subject ID: " + subject_id);
+    }
+
 
 }

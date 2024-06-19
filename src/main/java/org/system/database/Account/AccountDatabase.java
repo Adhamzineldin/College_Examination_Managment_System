@@ -136,9 +136,7 @@ public class AccountDatabase extends Database {
                 pstmt.setInt(6, updatedAccount.getId());
 
                 int affectedRows = pstmt.executeUpdate();
-                if (affectedRows > 0) {
-                    System.out.println("Account updated successfully.");
-                } else {
+                if (affectedRows <= 0) {
                     System.out.println("No account found with the provided ID.");
                 }
             }
@@ -181,6 +179,7 @@ public class AccountDatabase extends Database {
     }
 
     public static boolean isIdWithRoleNotPresent(int id, String userRole) {
+        openConnection();
         String sql = "SELECT COUNT(*) FROM Accounts WHERE id = ? AND userRole = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -192,6 +191,8 @@ public class AccountDatabase extends Database {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            closeConnection();
         }
         return true;
     }

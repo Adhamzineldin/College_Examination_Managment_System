@@ -56,7 +56,7 @@ public class SubjectDatabase extends Database {
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException | IllegalArgumentException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } finally {
             // Close the database connection
             closeConnection();
@@ -104,6 +104,7 @@ public class SubjectDatabase extends Database {
 
     public static void deleteSubject(int subjectId) {
         try {
+            openConnection();
             // Prepare statement
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM subjects WHERE subject_id = ?");
             preparedStatement.setInt(1, subjectId);
@@ -111,6 +112,8 @@ public class SubjectDatabase extends Database {
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 

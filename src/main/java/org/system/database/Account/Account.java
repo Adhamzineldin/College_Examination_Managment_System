@@ -1,5 +1,7 @@
 package org.system.database.Account;
 
+import static org.system.Modules.User.TitleCase.toTitleCase;
+
 public class Account {
     private int id;
     private String name;
@@ -70,34 +72,29 @@ public class Account {
     }
 
     public void setName(String name) {
-        this.name = name;
-        AccountDatabase.updateAccount(this);
+        this.name = toTitleCase(name);
     }
 
     public void setMail(String mail) {
-        this.mail = mail;
-        AccountDatabase.updateAccount(this);
+        this.mail = toTitleCase(mail);
+        this.isVerfified = false;
     }
 
     public void setPassword(String password) {
         this.password = password;
-        AccountDatabase.updateAccount(this);
     }
 
     public void setUserRole(String userRole) {
-        this.userRole = userRole;
-        AccountDatabase.updateAccount(this);
+        this.userRole = toTitleCase(userRole);
 
     }
 
     public void setStatus(String status) {
         this.status = status;
-        AccountDatabase.updateAccount(this);
     }
 
     public void verify() {
         this.isVerfified = true;
-        AccountDatabase.verifyAccount(this);
     }
 
     public void setId(int id) {
@@ -121,6 +118,6 @@ public class Account {
                 ", userRole = '" + userRole + '\'' +
                 ", status = '" + status + '\'' +
                 ", verificationStatus = " + verificationStatus +
-                '}';
+                "}\n";
     }
 }

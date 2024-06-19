@@ -51,58 +51,7 @@ public class Database {
         }
         return null;
     }
-
-//    // Save object to SQLite database with an ID
-//    protected static void saveObject(int id, Object obj) {
-//        try {
-//            openConnection();
-//            PreparedStatement pstmt = connection.prepareStatement("INSERT OR REPLACE INTO exam(exam_id, questions) VALUES(?, ?)");
-//
-//            // Serialize object
-//            byte[] serializedObject = serializeObject(obj);
-//
-//            // Set parameters
-//            pstmt.setInt(1, id);
-//            pstmt.setBytes(2, serializedObject);
-//
-//            pstmt.executeUpdate();
-//            pstmt.close();
-//            connection.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    // Retrieve object from SQLite database using an ID
-//    protected static Object retrieveObject(int id) {
-//        try {
-//            openConnection();
-//            PreparedStatement pstmt = connection.prepareStatement("SELECT questions FROM exam WHERE exam_id = ?");
-//            pstmt.setInt(1, id);
-//
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            if (rs.next()) {
-//                byte[] data = rs.getBytes("questions");
-//
-//                // Deserialize object
-//                Object obj = deserializeObject(data);
-//
-//                rs.close();
-//                pstmt.close();
-//                connection.close();
-//
-//                return obj;
-//            }
-//
-//            rs.close();
-//            pstmt.close();
-//            connection.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    
 
     public static void main(String[] args) {
     }
