@@ -19,7 +19,8 @@ public class AdminMenu {
         System.out.println("2) Manage students");
         System.out.println("3) Manage lecturers");
         System.out.println("4) Manage subjects");
-        System.out.println("5) Exit");
+        System.out.println("5) logout");
+        System.out.println("6) Exit");
         System.out.println("Input Option: ");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
@@ -37,6 +38,8 @@ public class AdminMenu {
 
                 manageSubjects(account);
             case 5:
+                User.start();
+            case 6:
                 System.out.println("Thank you for using the system");
                 System.exit(0);
 

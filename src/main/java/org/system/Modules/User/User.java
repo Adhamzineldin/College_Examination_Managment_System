@@ -17,6 +17,14 @@ import static org.system.Modules.User.LecturerLogin.lecturerLogin;
 import static org.system.Modules.User.StudentMenu.studentLogin;
 
 public class User {
+    public static void start() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter user email: ");
+        String email = sc.nextLine();
+        System.out.println("Enter the password: ");
+        String password = sc.nextLine();
+        User.login(email, password);
+    }
 
     public static void login(String email, String password) {
         Account account = AccountDatabase.checkLogin(email, password);
@@ -36,10 +44,12 @@ public class User {
 
             } else {
                 System.out.println("Your account is not activated please contact your admin");
+                start();
             }
 
         } else {
             System.out.println("Invalid User");
+            start();
         }
 
     }
@@ -81,7 +91,7 @@ public class User {
             message.setSubject("Verification Code");
 
             // Set the actual message
-            message.setText("Your random 6-digit number is: " + code);
+            message.setText("Your Verification code is: " + code);
 
             // Send message
             Transport.send(message);
@@ -103,7 +113,7 @@ public class User {
         System.out.println("Please enter the verification code: ");
         int input = sc.nextInt();
         if (input == code) {
-            account.verify();
+            AccountDatabase.verifyAccount(account);
             System.out.println("Your account has been verified");
             login(account.getMail(), account.getPassword());
         } else {

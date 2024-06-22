@@ -1,9 +1,12 @@
 package org.system.database.Exam;
 
+import org.system.database.Account.Account;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Exam implements Serializable {
     ArrayList<Question> questions;
@@ -12,7 +15,7 @@ public class Exam implements Serializable {
     String subject;
     int subject_id;
     ArrayList<Integer> id_of_who_joined;
-    HashMap<Integer, HashMap<Integer, Integer>> answers;
+    HashMap<Integer, HashMap<Integer, String>> answers;
     HashMap<Integer, Integer> grades;
     int duration;
 
@@ -26,7 +29,7 @@ public class Exam implements Serializable {
         this.duration = 0;
     }
 
-    public Exam(int subject_id, String subject, ArrayList<Integer> id_of_who_joined, HashMap<Integer, HashMap<Integer, Integer>> answers, HashMap<Integer, Integer> grades, int duration) {
+    public Exam(int subject_id, String subject, ArrayList<Integer> id_of_who_joined, HashMap<Integer, HashMap<Integer, String>> answers, HashMap<Integer, Integer> grades, int duration) {
         questions = new ArrayList<>();
         question_map = new HashMap<>();
         this.id_of_who_joined = id_of_who_joined;
@@ -54,11 +57,11 @@ public class Exam implements Serializable {
     }
 
     public String getExam() {
-        LinkedHashMap<LinkedHashMap<Integer, String>, LinkedHashMap<LinkedHashMap<Integer, String>, Integer>> exam = new LinkedHashMap<>();
+        LinkedHashMap<LinkedHashMap<Integer, String>, LinkedHashMap<LinkedHashMap<Integer, String>, String>> exam = new LinkedHashMap<>();
 
         for (Integer key : getQuestions().keySet()) {
             LinkedHashMap<Integer, String> questionTemp = new LinkedHashMap<>();
-            LinkedHashMap<LinkedHashMap<Integer, String>, Integer> optionsTemp = new LinkedHashMap<>();
+            LinkedHashMap<LinkedHashMap<Integer, String>, String> optionsTemp = new LinkedHashMap<>();
 
             questionTemp.put(question_map.get(key).getQuestion_number(), question_map.get(key).getQuestion());
             optionsTemp.put(question_map.get(key).getOptions(), question_map.get(key).getQuestion_answer());
@@ -97,20 +100,58 @@ public class Exam implements Serializable {
         this.id_of_who_joined = idsOfWhoJoined;
     }
 
+    public void addIdWhoJoined(int id) {
+        this.id_of_who_joined.add(id);
+    }
+
     public ArrayList<Integer> getIdsOfWhoJoined() {
         return id_of_who_joined;
     }
 
-    public void setAnswers(HashMap<Integer, HashMap<Integer, Integer>> answers) {
+    public void setAnswers(HashMap<Integer, HashMap<Integer, String>> answers) {
         this.answers = answers;
     }
 
-    public HashMap<Integer, HashMap<Integer, Integer>> getAnswers() {
+    public void addAnswer(Account account, Question question, String answer) {
+        // Get the answers map for the account
+        HashMap<Integer, String> accountAnswers = this.answers.get(account.getId());
+
+        // If the map does not exist, create and add it
+        if (accountAnswers == null) {
+            accountAnswers = new HashMap<Integer, String>();
+            this.answers.put(account.getId(), accountAnswers);
+        }
+
+        // Add the answer to the account's answers map
+        accountAnswers.put(question.getQuestion_number(), answer);
+    }
+
+
+    public HashMap<Integer, HashMap<Integer, String>> getAnswers() {
         return answers;
     }
 
     public void setGrades(HashMap<Integer, Integer> grades) {
         this.grades = grades;
+    }
+
+    public void calcGrade(Account account) {
+        int questionsNumber = getQuestions().size();
+        int grade = 0;
+        Map<Integer, String> accountAnswers = getAnswers().get(account.getId());
+
+        for (Map.Entry<Integer, String> entry : accountAnswers.entrySet()) {
+            Integer questionId = entry.getKey();
+            String givenAnswer = entry.getValue();
+            String correctAnswer = getQuestions().get(questionId).getQuestion_answer();
+
+            if (correctAnswer.equals("0") || correctAnswer.equals(givenAnswer)) {
+                grade++;
+            }
+        }
+
+        int percentage = (grade * 100) / questionsNumber;
+        grades.put(account.getId(), percentage);
     }
 
     public HashMap<Integer, Integer> getGrades() {
@@ -158,8 +199,6 @@ public class Exam implements Serializable {
             LinkedHashMap<Integer, String> options = question.getOptions();
             for (Integer optionNumber : options.keySet()) {
                 String optionText = options.get(optionNumber);
-                int answerNumber = (question.getQuestion_answer() == optionNumber) ? optionNumber : -1; // -1 if not answer
-
                 System.out.println("        Option " + optionNumber + ": " + optionText);
             }
         }

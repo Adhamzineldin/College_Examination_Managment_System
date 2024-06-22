@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 public class Question implements Serializable {
     String question;
     ArrayList<Option> options = new ArrayList<Option>();
-    int question_answer;
+    String question_answer = "0";
     int question_number;
 
     Question(String question) {
@@ -38,13 +38,13 @@ public class Question implements Serializable {
         options.add(option);
     }
 
-    public int getQuestion_answer() {
+    public String getQuestion_answer() {
         return question_answer;
     }
 
     public void setQuestion_answer(Option option) {
         getOptions();
-        this.question_answer = option.getOption_number();
+        this.question_answer = String.valueOf(option.getOption_number());
     }
 
     public int getQuestion_number() {

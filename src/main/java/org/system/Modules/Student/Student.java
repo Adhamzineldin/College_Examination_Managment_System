@@ -1,5 +1,7 @@
 package org.system.Modules.Student;
 
+import org.system.database.Exam.Exam;
+import org.system.database.Exam.ExamDatabase;
 import org.system.database.Subject.Subject;
 import org.system.database.Subject.SubjectDatabase;
 
@@ -9,29 +11,39 @@ import java.util.HashMap;
 public class Student {
     private String name;
     private int id;
-    private final ArrayList<String> courses = new ArrayList<String>();
-    private HashMap<String, Integer> grades;
+    private ArrayList<Subject> courses = new ArrayList<Subject>();
+    private HashMap<Subject, Integer> grades = new HashMap<Subject, Integer>();
 
     public Student(String name, int id) {
         this.name = name;
         this.id = id;
-        studentCourses();
-
+        this.courses = studentCourses();
 
     }
 
 
-    private void studentCourses() {
-        ArrayList<Subject> all_subjects = SubjectDatabase.getAllSubjects();
-        for (Subject subject : all_subjects) {
-            for (Integer id : subject.getStudent_ids()) {
-                if (this.id == id) {
-                    this.courses.add(subject.getSubject_name());
-                }
+    private ArrayList<Subject> studentCourses() {
 
+        return SubjectDatabase.getAllStudentSubjects(this.getId());
+
+    }
+
+    public void calculateGrades() {
+        for (Subject subject : this.getCourses()) {
+            int i = 0;
+            int total = 0;
+            int average = 0;
+            for (Exam exam : ExamDatabase.getExamsBySubjectId(subject.getSubject_id())) {
+                try {
+                    i++;
+                    total += exam.getGrades().get(this.getId());
+                } catch (Exception e) {
+                    total += 0;
+                }
+                average = total / i;
+                grades.put(subject, average);
             }
         }
-
     }
 
     public String getName() {
@@ -50,16 +62,17 @@ public class Student {
         this.id = id;
     }
 
-    public ArrayList<String> getCourses() {
+    public ArrayList<Subject> getCourses() {
         return courses;
     }
 
 
-    public HashMap<String, Integer> getGrades() {
+    public HashMap<Subject, Integer> getGrades() {
+        calculateGrades();
         return grades;
     }
 
-    public void setGrades(HashMap<String, Integer> grades) {
+    public void setGrades(HashMap<Subject, Integer> grades) {
         this.grades = grades;
     }
 

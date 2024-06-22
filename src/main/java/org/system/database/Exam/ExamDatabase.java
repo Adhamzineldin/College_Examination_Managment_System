@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ExamDatabase extends Database {
 
@@ -44,10 +43,10 @@ public class ExamDatabase extends Database {
     public static void insertExam(Exam exam) {
         String checkSql = "SELECT subject_name FROM Subjects WHERE subject_id = ?";
         String insertSql = "INSERT INTO exam (exam_subject, subject_id, ids_of_who_joined, answers, grades, exam, duration) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        String updateSql = "UPDATE exam SET exam = ? WHERE id = ?";
+        String updateSql = "UPDATE exam SET exam = ? WHERE exam_id = ?";
         Integer subject_id = exam.getSubjectID();
         ArrayList<Integer> idsOfWhoJoined = exam.getIdsOfWhoJoined();
-        HashMap<Integer, HashMap<Integer, Integer>> answers = exam.getAnswers();
+        HashMap<Integer, HashMap<Integer, String>> answers = exam.getAnswers();
         HashMap<Integer, Integer> grades = exam.getGrades();
         int duration = exam.getDuration();
 
@@ -107,10 +106,10 @@ public class ExamDatabase extends Database {
     }
 
     public static void updateExam(int examId, Exam exam) {
-        String updateSql = "UPDATE exam SET exam_subject = ?, subject_id = ?, ids_of_who_joined = ?, answers = ?, grades = ?, exam = ?, duration = ? WHERE id = ?";
+        String updateSql = "UPDATE exam SET exam_subject = ?, subject_id = ?, ids_of_who_joined = ?, answers = ?, grades = ?, exam = ?, duration = ? WHERE exam_id = ?";
         Integer subject_id = exam.getSubjectID();
         ArrayList<Integer> idsOfWhoJoined = exam.getIdsOfWhoJoined();
-        HashMap<Integer, HashMap<Integer, Integer>> answers = exam.getAnswers();
+        HashMap<Integer, HashMap<Integer, String>> answers = exam.getAnswers();
         HashMap<Integer, Integer> grades = exam.getGrades();
         int duration = exam.getDuration();
 
@@ -200,9 +199,9 @@ public class ExamDatabase extends Database {
     }
 
 
-    public static List<Exam> getExamsBySubjectId(int subjectId) {
+    public static ArrayList<Exam> getExamsBySubjectId(int subjectId) {
         String sql = "SELECT * FROM exam WHERE subject_id = ?";
-        List<Exam> exams = new ArrayList<>();
+        ArrayList<Exam> exams = new ArrayList<>();
 
         try {
             openConnection();
@@ -226,6 +225,48 @@ public class ExamDatabase extends Database {
         }
 
         return exams;
+    }
+
+    public static void main(String[] args) {
+        ExamDatabase examDatabase = new ExamDatabase();
+        examDatabase.createExamTable();
+
+
+        Option options1 = new Option("Option A");
+        Option options2 = new Option("Option A");
+        Option options3 = new Option("Option A");
+        Option options4 = new Option("Option A");
+
+        Option options11 = new Option("Option 1");
+        Option options22 = new Option("Option 2");
+        Option options33 = new Option("Option 3");
+        Option options44 = new Option("Option 4");
+
+        Question question1 = new Question("What is 2 + 2?");
+        question1.addOption(options1);
+        question1.addOption(options2);
+        question1.addOption(options3);
+        question1.addOption(options4);
+
+        Question question2 = new Question("What is the capital of France?");
+        question2.addOption(options11);
+        question2.addOption(options22);
+        question2.addOption(options33);
+        question2.addOption(options44);
+
+
+        question1.setQuestion_answer(options1);
+        question2.setQuestion_answer(options22);
+
+        Exam exam = new Exam();
+        exam.addQuestion(question1);
+        exam.addQuestion(question2);
+        exam.setSubjectID(1);
+        exam.setDuration(10);
+
+
+        // Insert the exam into the database
+        ExamDatabase.insertExam(exam);
     }
 
 }

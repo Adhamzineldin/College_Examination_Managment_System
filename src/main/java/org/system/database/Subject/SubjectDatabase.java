@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SubjectDatabase extends Database {
 
@@ -87,7 +88,9 @@ public class SubjectDatabase extends Database {
                         String[] studentIdsArray = studentIdsString.split(",");
                         ArrayList<Integer> student_ids = new ArrayList<>();
                         for (String id : studentIdsArray) {
-                            student_ids.add(Integer.parseInt(id));
+                            if (!Objects.equals(id, "")) {
+                                student_ids.add(Integer.parseInt(id));
+                            }
                         }
                         subject = new Subject(subject_id, subject_name, lecturer_id, student_ids);
                     }
@@ -186,11 +189,57 @@ public class SubjectDatabase extends Database {
                 String[] studentIdsArray = studentIdsString.split(",");
                 ArrayList<Integer> student_ids = new ArrayList<>();
                 for (String id : studentIdsArray) {
-                    student_ids.add(Integer.parseInt(id));
+                    if (!Objects.equals(id, "")) {
+                        student_ids.add(Integer.parseInt(id));
+                    }
                 }
                 // Create a new Subject object and add it to the list
                 Subject subject = new Subject(subject_id, subject_name, lecturer_id, student_ids);
                 subjects.add(subject);
+            }
+
+            // Close the prepared statement and the result set
+            preparedStatement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the database connection
+            closeConnection();
+        }
+        return subjects;
+    }
+
+    public static ArrayList<Subject> getAllStudentSubjects(int studentId) {
+        ArrayList<Subject> subjects = new ArrayList<>();
+        try {
+            // Open the database connection
+            openConnection();
+
+            // Prepare statement
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM subjects");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Iterate through the result set
+            while (resultSet.next()) {
+                int subject_id = resultSet.getInt("subject_id");
+                String subject_name = resultSet.getString("subject_name");
+                int lecturer_id = resultSet.getInt("lecturer_id");
+                // Retrieve student IDs from comma-separated string
+                String studentIdsString = resultSet.getString("student_ids");
+                String[] studentIdsArray = studentIdsString.split(",");
+                ArrayList<Integer> student_ids = new ArrayList<>();
+                for (String id : studentIdsArray) {
+                    if (!Objects.equals(id, "")) {
+                        student_ids.add(Integer.parseInt(id));
+                    }
+                }
+                // Check if the student ID is in the list of student IDs
+                if (student_ids.contains(studentId)) {
+                    // Create a new Subject object and add it to the list
+                    Subject subject = new Subject(subject_id, subject_name, lecturer_id, student_ids);
+                    subjects.add(subject);
+                }
             }
 
             // Close the prepared statement and the result set
