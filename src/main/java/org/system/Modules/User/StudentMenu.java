@@ -46,6 +46,7 @@ public class StudentMenu {
         for (Map.Entry<Subject, Integer> entry : student.getGrades().entrySet()) {
             System.out.println(entry.getKey().getSubject_name() + " : " + entry.getValue() + "%");
         }
+        studentLogin(account);
     }
 
 
@@ -104,6 +105,7 @@ public class StudentMenu {
         System.out.println("Grade before review is:  " + exam.getGrades().get(account.getId()) + "%");
         exam.addIdWhoJoined(account.getId());
         ExamDatabase.updateExam(exam.getId(), exam);
+        subjects(account);
     }
 
 
@@ -138,6 +140,7 @@ public class StudentMenu {
         Student student = new Student(account.getName(), account.getId());
         ArrayList<Subject> subjects_array = student.getCourses();
         int i = 1;
+        System.out.println("0) BACK");
         for (Subject subject : subjects_array) {
             System.out.println(i + ") " + subject.getSubject_name());
             i++;
@@ -145,6 +148,9 @@ public class StudentMenu {
         System.out.println("input subject you want");
         Scanner input = new Scanner(System.in);
         int choice = input.nextInt();
+        if (choice == 0) {
+            studentLogin(account);
+        }
         try {
             subject(account, subjects_array.get(choice - 1));
         } catch (Exception e) {

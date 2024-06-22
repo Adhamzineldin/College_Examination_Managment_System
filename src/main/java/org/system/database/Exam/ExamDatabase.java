@@ -261,7 +261,7 @@ public class ExamDatabase extends Database {
         Exam exam = new Exam();
         exam.addQuestion(question1);
         exam.addQuestion(question2);
-        exam.setSubjectID(1);
+        exam.setSubjectID(2);
         exam.setDuration(10);
 
 
