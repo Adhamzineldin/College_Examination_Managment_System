@@ -8,9 +8,9 @@ public class Question implements Serializable {
     String question;
     ArrayList<Option> options = new ArrayList<Option>();
     String question_answer = "0";
-    int question_number;
+    int question_number = 0;
 
-    Question(String question) {
+    public Question(String question) {
         this.question = question;
 
     }
@@ -35,16 +35,22 @@ public class Question implements Serializable {
     }
 
     public void addOption(Option option) {
+
         options.add(option);
+        getOptions();
     }
 
     public String getQuestion_answer() {
         return question_answer;
     }
 
-    public void setQuestion_answer(Option option) {
+    public void setQuestion_answer(String question_answer) {
         getOptions();
-        this.question_answer = String.valueOf(option.getOption_number());
+        this.question_answer = String.valueOf(question_answer);
+    }
+
+    public void removeOption(int number) {
+        this.options.remove(number);
     }
 
     public int getQuestion_number() {

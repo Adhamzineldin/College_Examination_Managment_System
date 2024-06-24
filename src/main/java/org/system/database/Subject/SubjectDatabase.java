@@ -254,5 +254,49 @@ public class SubjectDatabase extends Database {
         return subjects;
     }
 
+    public static ArrayList<Subject> getAllLecturerSubjects(int lecturerId) {
+        ArrayList<Subject> subjects = new ArrayList<>();
+        try {
+            // Open the database connection
+            openConnection();
+
+            // Prepare statement with query to filter by lecturer_id
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM subjects WHERE lecturer_id = ?");
+            preparedStatement.setInt(1, lecturerId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Iterate through the result set
+            while (resultSet.next()) {
+                int subjectId = resultSet.getInt("subject_id");
+                String subjectName = resultSet.getString("subject_name");
+                int lecturerIdFromDB = resultSet.getInt("lecturer_id");
+
+                // Retrieve student IDs from comma-separated string
+                String studentIdsString = resultSet.getString("student_ids");
+                String[] studentIdsArray = studentIdsString.split(",");
+                ArrayList<Integer> studentIds = new ArrayList<>();
+                for (String id : studentIdsArray) {
+                    if (!Objects.equals(id, "")) {
+                        studentIds.add(Integer.parseInt(id));
+                    }
+                }
+
+                // Create a new Subject object and add it to the list
+                Subject subject = new Subject(subjectId, subjectName, lecturerIdFromDB, studentIds);
+                subjects.add(subject);
+            }
+
+            // Close the prepared statement and the result set
+            preparedStatement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close the database connection
+            closeConnection();
+        }
+        return subjects;
+    }
+
 
 }

@@ -13,6 +13,7 @@ public class Student {
     private int id;
     private ArrayList<Subject> courses = new ArrayList<Subject>();
     private HashMap<Subject, Integer> grades = new HashMap<Subject, Integer>();
+    private HashMap<Integer, Integer> gradesById = new HashMap<Integer, Integer>();
 
     public Student(String name, int id) {
         this.name = name;
@@ -42,6 +43,7 @@ public class Student {
                 }
                 average = total / i;
                 grades.put(subject, average);
+                gradesById.put(subject.getSubject_id(), average);
             }
         }
     }
@@ -70,6 +72,11 @@ public class Student {
     public HashMap<Subject, Integer> getGrades() {
         calculateGrades();
         return grades;
+    }
+
+    public HashMap<Integer, Integer> getGradesById() {
+        calculateGrades();
+        return gradesById;
     }
 
     public void setGrades(HashMap<Subject, Integer> grades) {

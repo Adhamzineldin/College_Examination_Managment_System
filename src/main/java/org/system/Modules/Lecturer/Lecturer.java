@@ -11,26 +11,17 @@ import java.util.List;
 public class Lecturer {
     private String name;
     private int id;
-    private final ArrayList<String> courses = new ArrayList<String>();
+    private ArrayList<Subject> courses = new ArrayList<Subject>();
 
     public Lecturer(String name, int id) {
         this.name = name;
         this.id = id;
-        lecturerCourses();
+        this.courses = lecturerCourses();
     }
 
 
-    private void lecturerCourses() {
-        ArrayList<Subject> all_subjects = SubjectDatabase.getAllSubjects();
-        for (Subject subject : all_subjects) {
-            for (Integer id : subject.getStudent_ids()) {
-                if (this.id == id) {
-                    this.courses.add(subject.getSubject_name());
-                }
-
-            }
-        }
-
+    private ArrayList<Subject> lecturerCourses() {
+        return SubjectDatabase.getAllLecturerSubjects(this.getId());
     }
 
     public String getName() {
@@ -49,7 +40,7 @@ public class Lecturer {
         this.id = id;
     }
 
-    public ArrayList<String> getCourses() {
+    public ArrayList<Subject> getCourses() {
         return courses;
     }
 
@@ -68,7 +59,7 @@ public class Lecturer {
     public void upDateExam(int examID, Exam exam) {
         ExamDatabase.updateExam(examID, exam);
     }
-    
+
 
     public void removeExam(Exam exam) {
 

@@ -26,7 +26,7 @@ public class Exam implements Serializable {
         this.id_of_who_joined = new ArrayList<>();
         this.answers = new HashMap<>();
         this.grades = new HashMap<>();
-        this.duration = 0;
+        this.duration = 60;
     }
 
     public Exam(int subject_id, String subject, ArrayList<Integer> id_of_who_joined, HashMap<Integer, HashMap<Integer, String>> answers, HashMap<Integer, Integer> grades, int duration) {
@@ -43,6 +43,10 @@ public class Exam implements Serializable {
 
     public void addQuestion(Question question) {
         questions.add(question);
+    }
+
+    public void removeQuestion(Question question) {
+        this.questions.remove(question);
     }
 
     public HashMap<Integer, Question> getQuestions() {

@@ -13,6 +13,11 @@ public class AccountDatabase extends Database {
 
     public AccountDatabase() {
         createTable();
+        if (!isEmailUsed("Mohalya3@gmail.com")) {
+            Account account = new Account("Adham Zineldin", "Mohalya3@gmail.com", "A251m2006", "admin", "activated");
+            insertAccount(account);
+        }
+
     }
 
     private void createTable() {
@@ -22,7 +27,6 @@ public class AccountDatabase extends Database {
 
             // Establish a connection to the database
             connection = DriverManager.getConnection(url);
-            System.out.println("Connection to SQLite has been established.");
 
             // Create a table if it doesn't exist
             String sql = "CREATE TABLE IF NOT EXISTS Accounts ("
@@ -36,7 +40,6 @@ public class AccountDatabase extends Database {
 
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute(sql);
-                System.out.println("Table created successfully.");
             }
         } catch (ClassNotFoundException e) {
             System.out.println("SQLite JDBC driver not found.");

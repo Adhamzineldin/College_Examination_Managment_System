@@ -8,16 +8,21 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.system.database.Account.Account;
 import org.system.database.Account.AccountDatabase;
+import org.system.database.Exam.ExamDatabase;
+import org.system.database.Subject.SubjectDatabase;
 
 import java.util.Properties;
 import java.util.Scanner;
 
 import static org.system.Modules.User.AdminMenu.adminLogin;
-import static org.system.Modules.User.LecturerLogin.lecturerLogin;
+import static org.system.Modules.User.LecturerMenu.lecturerLogin;
 import static org.system.Modules.User.StudentMenu.studentLogin;
 
 public class User {
     public static void start() {
+        AccountDatabase accountDatabase = new AccountDatabase();
+        SubjectDatabase subjectDatabase = new SubjectDatabase();
+        ExamDatabase examDatabase = new ExamDatabase();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter user email: ");
         String email = sc.nextLine();

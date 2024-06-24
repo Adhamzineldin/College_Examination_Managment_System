@@ -255,13 +255,13 @@ public class ExamDatabase extends Database {
         question2.addOption(options44);
 
 
-        question1.setQuestion_answer(options1);
-        question2.setQuestion_answer(options22);
+        question1.setQuestion_answer(String.valueOf(options1.getOption_number()));
+        question2.setQuestion_answer(String.valueOf(options22.getOption_number()));
 
         Exam exam = new Exam();
         exam.addQuestion(question1);
         exam.addQuestion(question2);
-        exam.setSubjectID(2);
+        exam.setSubjectID(1);
         exam.setDuration(10);
 
 

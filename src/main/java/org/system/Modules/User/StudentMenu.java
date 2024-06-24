@@ -1,5 +1,6 @@
 package org.system.Modules.User;
 
+import org.system.Modules.Admin.Administrative;
 import org.system.Modules.Student.Student;
 import org.system.database.Account.Account;
 import org.system.database.Exam.Exam;
@@ -8,17 +9,14 @@ import org.system.database.Exam.Question;
 import org.system.database.Subject.Subject;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class StudentMenu {
     public static void studentLogin(Account account) {
         System.out.println("Welcome back " + account.getName() + " " + account.getUserRole());
         Scanner input = new Scanner(System.in);
         System.out.println("1) Subjects");
-        System.out.println("2) Accounts");
+        System.out.println("2) Change email and pass");
         System.out.println("3) Grades");
         System.out.println("4) logout");
         System.out.println("5) Exit");
@@ -29,6 +27,7 @@ public class StudentMenu {
                 subjects(account);
                 break;
             case 2:
+                alterEmailAndPass(account);
                 break;
             case 3:
                 getGrades(account);
@@ -39,6 +38,37 @@ public class StudentMenu {
                 System.exit(0);
         }
 
+    }
+
+
+    private static void alterEmailAndPass(Account account) {
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter 0 in mail to exit: ");
+
+            System.out.println("Enter mail: ");
+            String mail = sc.nextLine();
+            if (Objects.equals(mail, "0")) {
+                studentLogin(account);
+            }
+            System.out.println("Enter password: ");
+            String password = sc.nextLine();
+            System.out.println("Confirm password: ");
+            String passwordConfirm = sc.nextLine();
+
+            if (password.equals(passwordConfirm)) {
+                account.setMail(mail);
+                account.setPassword(password);
+                Administrative.updateUser(account);
+                System.out.println("Your account has been updated");
+                studentLogin(account);
+            } else {
+                System.out.println("Passwords do not match");
+                alterEmailAndPass(account);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void getGrades(Account account) {
@@ -56,6 +86,7 @@ public class StudentMenu {
             System.out.println("Your answer: " + exam.getAnswers().get(account.getId()).get(question.getQuestion_number()));
             System.out.println("Correct answer: " + question.getQuestion_answer());
         }
+        subjects(account);
     }
 
     private static void enterExam(Account account, Exam exam) {
@@ -119,6 +150,7 @@ public class StudentMenu {
             } else {
                 System.out.println(i + ") Exam Not Done");
             }
+            i++;
         }
         if (exams.isEmpty()) {
             System.out.println("No exams found for this subject");
