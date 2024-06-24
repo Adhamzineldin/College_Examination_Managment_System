@@ -14,7 +14,7 @@ public class AccountDatabase extends Database {
     public AccountDatabase() {
         createTable();
         if (!isEmailUsed("Mohalya3@gmail.com")) {
-            Account account = new Account("Adham Zineldin", "Mohalya3@gmail.com", "A251m2006", "admin", "activated");
+            Account account = new Account("Adham Zineldin", "Mohalya3@gmail.com", "123456789", "admin", "activated");
             insertAccount(account);
         }
 

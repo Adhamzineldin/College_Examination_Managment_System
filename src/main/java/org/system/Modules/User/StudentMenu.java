@@ -98,7 +98,8 @@ public class StudentMenu {
 
         int currentQuestionIndex = 1;
         LocalDateTime endTime = startTime.plusMinutes(examDurationMinutes);
-
+        System.out.println("Duration: " + examDurationMinutes);
+        System.out.println(questions.size() + " questions");
         while (LocalDateTime.now().isBefore(endTime)) {
             if (currentQuestionIndex > questions.size()) {
                 break;
@@ -131,6 +132,7 @@ public class StudentMenu {
 
     private static void closeExam(Account account, Exam exam) {
         // Implement the logic to close the exam here
+        exam.addIdToAnswers(account);
         exam.calcGrade(account);
         System.out.println("Exam completed!");
         System.out.println("Grade before review is:  " + exam.getGrades().get(account.getId()) + "%");
@@ -148,7 +150,8 @@ public class StudentMenu {
             if (exam.getIdsOfWhoJoined().contains(account.getId())) {
                 System.out.println(i + ") Exam Done " + ": " + exam.getGrades().get(account.getId()) + "%");
             } else {
-                System.out.println(i + ") Exam Not Done");
+                System.out.println(i + ") Exam Not Done ");
+                System.out.println(i + ") Exam Not Done  Duration: " + exam.getDuration() + "m");
             }
             i++;
         }

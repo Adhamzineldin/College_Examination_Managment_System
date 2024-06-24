@@ -130,6 +130,14 @@ public class Exam implements Serializable {
         accountAnswers.put(question.getQuestion_number(), answer);
     }
 
+    public void addIdToAnswers(Account account) {
+        HashMap<Integer, String> accountAnswers = this.answers.get(account.getId());
+        if (accountAnswers == null) {
+            accountAnswers = new HashMap<Integer, String>();
+            this.answers.put(account.getId(), accountAnswers);
+        }
+    }
+
 
     public HashMap<Integer, HashMap<Integer, String>> getAnswers() {
         return answers;

@@ -87,6 +87,7 @@ public class LecturerMenu {
                 break;
             case 3:
                 studentGrades(account, subject);
+                break;
             case 4:
                 subjects(account);
                 break;
@@ -145,6 +146,7 @@ public class LecturerMenu {
                     exam.setDuration(duration);
                     exam(account, exam, subject);
                 }
+                break;
 
             case 5:
                 exams(account, subject);
@@ -189,12 +191,13 @@ public class LecturerMenu {
         }
 
         System.out.println("0) Back");
-        System.out.println("Input Id of grade you want to change");
+        System.out.println("1) Change ids Grade");
+        System.out.println("2) View Ids answer");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
         if (choice == 0) {
             exam(account, exam, subject);
-        } else {
+        } else if (choice == 1) {
             System.out.println("Input Id of grade you want to change");
             int id = sc.nextInt();
             if (grades.containsKey(id)) {
@@ -204,13 +207,32 @@ public class LecturerMenu {
                 grades.put(id, newGrade);
                 System.out.println("Grade Updated");
                 ExamDatabase.updateExam(exam.getId(), exam);
+                examGrades(account, exam, subject);
             } else {
                 System.out.println("Grade Not Found");
             }
 
 
+        } else if (choice == 2) {
+            System.out.println("Input Id student to see his exam");
+            Scanner sc2 = new Scanner(System.in);
+            int id = sc2.nextInt();
+            for (Question question : exam.getQuestions().values()) {
+                displayQuestion(question);
+                System.out.println("Student answer: " + exam.getAnswers().get(id).get(question.getQuestion_number()));
+                System.out.println("Correct answer: " + question.getQuestion_answer());
+            }
+            examGrades(account, exam, subject);
         }
-        examGrades(account, exam, subject);
+
+    }
+
+    private static void displayQuestion(Question question) {
+        System.out.println(question.getQuestion_number() + ") " + question.getQuestion());
+        HashMap<Integer, String> options = question.getOptions();
+        for (Integer key : options.keySet()) {
+            System.out.println(key + ". " + options.get(key));
+        }
     }
 
     private static void questions(Account account, Exam exam, Subject subject) {
@@ -272,6 +294,7 @@ public class LecturerMenu {
                         ExamDatabase.updateExam(exam.getId(), exam);
                         System.out.println("Question deleted successfully");
                         questions(account, exam, subject);
+                        break;
                 }
             case 4:
                 questions(account, exam, subject);
