@@ -1,0 +1,482 @@
+<html>
+<head>
+<title>AdminMenu.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c792ea; font-style: italic;}
+.s1 { color: #c3cee3;}
+.s2 { color: #89ddff;}
+.s3 { color: #c3e88d;}
+.s4 { color: #f78c6c;}
+</style>
+</head>
+<body bgcolor="#0f111a">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AdminMenu.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">Admin</span><span class="s2">.</span><span class="s1">Administrative</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Subject</span><span class="s2">.</span><span class="s1">Subject</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Subject</span><span class="s2">.</span><span class="s1">SubjectDatabase</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Objects</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Scanner</span><span class="s2">;</span>
+
+<span class="s0">import static </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">.</span><span class="s1">TitleCase</span><span class="s2">.</span><span class="s1">toTitleCase</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">AdminMenu </span><span class="s2">{</span>
+
+    <span class="s0">public static void </span><span class="s1">adminLogin</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Welcome back &quot; </span><span class="s2">+ </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">() + </span><span class="s3">&quot; &quot; </span><span class="s2">+ </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getUserRole</span><span class="s2">());</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Alter email and password&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Manage students&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Manage lecturers&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) Manage subjects&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;5) logout&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;6) Exit&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input Option: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">alterEmailAndPass</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+
+                <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s0">case </span><span class="s4">5</span><span class="s2">:</span>
+                <span class="s1">User</span><span class="s2">.</span><span class="s1">start</span><span class="s2">();</span>
+            <span class="s0">case </span><span class="s4">6</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Thank you for using the system&quot;</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">exit</span><span class="s2">(</span><span class="s4">0</span><span class="s2">);</span>
+
+
+        <span class="s2">}</span>
+
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static boolean </span><span class="s1">inputAdminPassword</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Please enter your password: &quot;</span><span class="s2">);</span>
+        <span class="s1">String password </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">password</span><span class="s2">, </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getPassword</span><span class="s2">())) {</span>
+            <span class="s0">return true</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">return false</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Add Subject&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Remove Subject&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Add Student to subject&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) Remove Student to subject&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;5) Assign lecturer to subject&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;6) Back&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input Option: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">addSubject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">removeSubject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">addStudentToSubject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s1">removeStudentToSubject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">5</span><span class="s2">:</span>
+                <span class="s1">assignLecturerToSubject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">6</span><span class="s2">:</span>
+                <span class="s1">adminLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">assignLecturerToSubject</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Subject</span><span class="s2">&gt; </span><span class="s1">subjects </span><span class="s2">= </span><span class="s1">SubjectDatabase</span><span class="s2">.</span><span class="s1">getAllSubjects</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Subject subject </span><span class="s2">: </span><span class="s1">subjects</span><span class="s2">) {</span>
+            <span class="s1">subject</span><span class="s2">.</span><span class="s1">printSubject</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter Subject id to assign lecturer to subject: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">subjectId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter lecturer id to add to subject: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">studentId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">changeSubjectLecturer</span><span class="s2">(</span><span class="s1">subjectId</span><span class="s2">, </span><span class="s1">studentId</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Subject &quot; </span><span class="s2">+ </span><span class="s1">subjectId </span><span class="s2">+ </span><span class="s3">&quot; has been assigned to &quot; </span><span class="s2">+ </span><span class="s1">studentId</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+        <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">addStudentToSubject</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Subject</span><span class="s2">&gt; </span><span class="s1">subjects </span><span class="s2">= </span><span class="s1">SubjectDatabase</span><span class="s2">.</span><span class="s1">getAllSubjects</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Subject subject </span><span class="s2">: </span><span class="s1">subjects</span><span class="s2">) {</span>
+            <span class="s1">subject</span><span class="s2">.</span><span class="s1">printSubject</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter Subject id to add student to subject: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">subjectId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter student id to add to subject: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">studentId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">add_student</span><span class="s2">(</span><span class="s1">subjectId</span><span class="s2">, </span><span class="s1">studentId</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Student &quot; </span><span class="s2">+ </span><span class="s1">studentId </span><span class="s2">+ </span><span class="s3">&quot; has been assigned to &quot; </span><span class="s2">+ </span><span class="s1">subjectId</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+        <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">removeStudentToSubject</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Subject</span><span class="s2">&gt; </span><span class="s1">subjects </span><span class="s2">= </span><span class="s1">SubjectDatabase</span><span class="s2">.</span><span class="s1">getAllSubjects</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Subject subject </span><span class="s2">: </span><span class="s1">subjects</span><span class="s2">) {</span>
+            <span class="s1">subject</span><span class="s2">.</span><span class="s1">printSubject</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter Subject id to remove student from subject: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">subjectId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter student id to remove to subject: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">studentId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">inputAdminPassword</span><span class="s2">(</span><span class="s1">account</span><span class="s2">)) {</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">remove_student</span><span class="s2">(</span><span class="s1">subjectId</span><span class="s2">, </span><span class="s1">studentId</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Removed student &quot; </span><span class="s2">+ </span><span class="s1">studentId </span><span class="s2">+ </span><span class="s3">&quot; from subject &quot; </span><span class="s2">+ </span><span class="s1">subjectId</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Wrong password&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+        <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private static void </span><span class="s1">addSubject</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter Subject Name: &quot;</span><span class="s2">);</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s1">String name </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter lecturer id: &quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">lecturerId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s0">int </span><span class="s1">buff </span><span class="s2">= </span><span class="s4">1</span><span class="s2">;</span>
+            <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">&gt; </span><span class="s1">student_ids </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+            <span class="s0">while </span><span class="s2">(</span><span class="s1">buff </span><span class="s2">!= </span><span class="s4">0</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter student id to add to the subject and 0 to stop: &quot;</span><span class="s2">);</span>
+                <span class="s1">buff </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">buff </span><span class="s2">!= </span><span class="s4">0 </span><span class="s2">&amp;&amp; !</span><span class="s1">student_ids</span><span class="s2">.</span><span class="s1">contains</span><span class="s2">(</span><span class="s1">buff</span><span class="s2">)) {</span>
+                    <span class="s1">student_ids</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">buff</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+            <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">createSubject</span><span class="s2">(</span><span class="s1">name</span><span class="s2">, </span><span class="s1">lecturerId</span><span class="s2">, </span><span class="s1">student_ids</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Subject created successfully: &quot;</span><span class="s2">);</span>
+            <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">removeSubject</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Subject</span><span class="s2">&gt; </span><span class="s1">subjects </span><span class="s2">= </span><span class="s1">SubjectDatabase</span><span class="s2">.</span><span class="s1">getAllSubjects</span><span class="s2">();</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s1">Subject subject </span><span class="s2">: </span><span class="s1">subjects</span><span class="s2">) {</span>
+                <span class="s1">subject</span><span class="s2">.</span><span class="s1">printSubject</span><span class="s2">();</span>
+            <span class="s2">}</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter Subject id to remove from the subject and 0 to stop: &quot;</span><span class="s2">);</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">== </span><span class="s4">0</span><span class="s2">) {</span>
+                <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter subject id again to remove: &quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">subjectId </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">!= </span><span class="s1">subjectId</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Subject id does not match&quot;</span><span class="s2">);</span>
+                <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">inputAdminPassword</span><span class="s2">(</span><span class="s1">account</span><span class="s2">)) {</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">removeSubject</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Subject removed successfully&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Wrong password&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+            <span class="s1">manageSubjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private static void </span><span class="s1">alterEmailAndPass</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter 0 in mail to exit: &quot;</span><span class="s2">);</span>
+
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter mail: &quot;</span><span class="s2">);</span>
+            <span class="s1">String mail </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">mail</span><span class="s2">, </span><span class="s3">&quot;0&quot;</span><span class="s2">)) {</span>
+                <span class="s1">adminLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter password: &quot;</span><span class="s2">);</span>
+            <span class="s1">String password </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Confirm password: &quot;</span><span class="s2">);</span>
+            <span class="s1">String passwordConfirm </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">password</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">passwordConfirm</span><span class="s2">)) {</span>
+                <span class="s1">account</span><span class="s2">.</span><span class="s1">setMail</span><span class="s2">(</span><span class="s1">mail</span><span class="s2">);</span>
+                <span class="s1">account</span><span class="s2">.</span><span class="s1">setPassword</span><span class="s2">(</span><span class="s1">password</span><span class="s2">);</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">updateUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Your account has been updated&quot;</span><span class="s2">);</span>
+                <span class="s1">adminLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Passwords do not match&quot;</span><span class="s2">);</span>
+                <span class="s1">alterEmailAndPass</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">addUser</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">String userRole</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;Enter %s Name: &quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+            <span class="s1">String name </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;Enter %s Email: &quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+            <span class="s1">String email </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;Enter %s Password: &quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+            <span class="s1">String password </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s0">int </span><span class="s1">isVerified </span><span class="s2">= </span><span class="s4">0</span><span class="s2">;</span>
+            <span class="s1">String status </span><span class="s2">= </span><span class="s3">&quot;activated&quot;</span><span class="s2">;</span>
+            <span class="s1">Account newUser </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Account</span><span class="s2">(</span><span class="s1">name</span><span class="s2">, </span><span class="s1">email</span><span class="s2">, </span><span class="s1">password</span><span class="s2">, </span><span class="s1">userRole</span><span class="s2">, </span><span class="s1">status</span><span class="s2">);</span>
+            <span class="s0">if </span><span class="s2">(!</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">name</span><span class="s2">, </span><span class="s3">&quot;&quot;</span><span class="s2">) &amp;&amp; !</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">email</span><span class="s2">, </span><span class="s3">&quot;null&quot;</span><span class="s2">) &amp;&amp; !</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">password</span><span class="s2">, </span><span class="s3">&quot;null&quot;</span><span class="s2">)) {</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">addUser</span><span class="s2">(</span><span class="s1">newUser</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Please enter a valid input&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">removeUser</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">String userRole</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;Enter %s Email you want to remove: &quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+            <span class="s1">String email </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;Confirm %s Email: &quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+            <span class="s1">String emailConfirmation </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">emailConfirmation</span><span class="s2">, </span><span class="s1">email</span><span class="s2">)) {</span>
+
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">inputAdminPassword</span><span class="s2">(</span><span class="s1">account</span><span class="s2">)) {</span>
+                    <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">deleteUser</span><span class="s2">(</span><span class="s1">email</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Wrong Passwords&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;emails are not equal try again&quot;</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">editUser</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">String userRole</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;Enter %S ID: &quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+            <span class="s1">String id </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">Account userAccount </span><span class="s2">= </span><span class="s1">Administrative</span><span class="s2">.</span><span class="s1">getUserById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">, </span><span class="s1">userRole</span><span class="s2">);</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">userAccount </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter 0 to keep default: &quot;</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter user Name current = &quot; </span><span class="s2">+ </span><span class="s1">userAccount</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">() + </span><span class="s3">&quot; :&quot;</span><span class="s2">);</span>
+                <span class="s1">String name </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter user email current = &quot; </span><span class="s2">+ </span><span class="s1">userAccount</span><span class="s2">.</span><span class="s1">getMail</span><span class="s2">() + </span><span class="s3">&quot; :&quot;</span><span class="s2">);</span>
+                <span class="s1">String email </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter user role current = &quot; </span><span class="s2">+ </span><span class="s1">userAccount</span><span class="s2">.</span><span class="s1">getUserRole</span><span class="s2">() + </span><span class="s3">&quot; :&quot;</span><span class="s2">);</span>
+                <span class="s1">String role </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">name</span><span class="s2">, </span><span class="s3">&quot;0&quot;</span><span class="s2">) &amp;&amp; !</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">name</span><span class="s2">, </span><span class="s3">&quot;&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">userAccount</span><span class="s2">.</span><span class="s1">setName</span><span class="s2">(</span><span class="s1">name</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">email</span><span class="s2">, </span><span class="s3">&quot;0&quot;</span><span class="s2">) &amp;&amp; !</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">email</span><span class="s2">, </span><span class="s3">&quot;&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">userAccount</span><span class="s2">.</span><span class="s1">setMail</span><span class="s2">(</span><span class="s1">email</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s0">if </span><span class="s2">(!</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">role</span><span class="s2">, </span><span class="s3">&quot;0&quot;</span><span class="s2">) &amp;&amp; !</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">role</span><span class="s2">, </span><span class="s3">&quot;&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">userAccount</span><span class="s2">.</span><span class="s1">setUserRole</span><span class="s2">(</span><span class="s1">role</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">updateUser</span><span class="s2">(</span><span class="s1">userAccount</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Your account has been updated&quot;</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;%s does not exist </span><span class="s2">\n</span><span class="s3">&quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">searchUser</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">String userRole</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;Enter %s ID: &quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+            <span class="s1">String id </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">Account userAccount </span><span class="s2">= </span><span class="s1">Administrative</span><span class="s2">.</span><span class="s1">getUserById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">, </span><span class="s1">userRole</span><span class="s2">);</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">userAccount </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">userAccount</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">();</span>
+                <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">printf</span><span class="s2">(</span><span class="s3">&quot;%s does not exist </span><span class="s2">\n</span><span class="s3">&quot;</span><span class="s2">, </span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">));</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                    <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">userRole</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Add Student&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Remove Student&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Edit Student&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) List Students&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;5) Search Student&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;6) BACK&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input Option: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">option </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">option</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">addUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;student&quot;</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">removeUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;student&quot;</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">editUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;student&quot;</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">getUserByRole</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">);</span>
+                <span class="s1">manageStudents</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">5</span><span class="s2">:</span>
+                <span class="s1">searchUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;student&quot;</span><span class="s2">);</span>
+            <span class="s0">case </span><span class="s4">6</span><span class="s2">:</span>
+                <span class="s1">adminLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+
+
+    <span class="s0">private static void </span><span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Add lecturer&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Remove lecturer&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Edit lecturer&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) List lecturers&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;5) Search lecturer&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;6) BACK&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input Option: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">option </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">option</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">addUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;lecturer&quot;</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">removeUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;lecturer&quot;</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">editUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;lecturer&quot;</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">getUserByRole</span><span class="s2">(</span><span class="s3">&quot;lecturer&quot;</span><span class="s2">);</span>
+                <span class="s1">manageLecturers</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">5</span><span class="s2">:</span>
+                <span class="s1">searchUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s3">&quot;lecturer&quot;</span><span class="s2">);</span>
+            <span class="s0">case </span><span class="s4">6</span><span class="s2">:</span>
+                <span class="s1">adminLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

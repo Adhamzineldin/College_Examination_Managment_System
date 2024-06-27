@@ -1,0 +1,442 @@
+<html>
+<head>
+<title>LecturerMenu.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c792ea; font-style: italic;}
+.s1 { color: #c3cee3;}
+.s2 { color: #89ddff;}
+.s3 { color: #c3e88d;}
+.s4 { color: #f78c6c;}
+</style>
+</head>
+<body bgcolor="#0f111a">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+LecturerMenu.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">Admin</span><span class="s2">.</span><span class="s1">Administrative</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">Lecturer</span><span class="s2">.</span><span class="s1">Lecturer</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">Student</span><span class="s2">.</span><span class="s1">Student</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">.</span><span class="s1">AccountDatabase</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Exam</span><span class="s2">.</span><span class="s1">Exam</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Exam</span><span class="s2">.</span><span class="s1">ExamDatabase</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Exam</span><span class="s2">.</span><span class="s1">Option</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Exam</span><span class="s2">.</span><span class="s1">Question</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Subject</span><span class="s2">.</span><span class="s1">Subject</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.*;</span>
+
+<span class="s0">public class </span><span class="s1">LecturerMenu </span><span class="s2">{</span>
+    <span class="s0">public static void </span><span class="s1">lecturerLogin</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Welcome back &quot; </span><span class="s2">+ </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">() + </span><span class="s3">&quot; &quot; </span><span class="s2">+ </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getUserRole</span><span class="s2">());</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Subjects&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Change Email and Password&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) logout&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) Exit&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">subjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">alterEmailAndPass</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">User</span><span class="s2">.</span><span class="s1">start</span><span class="s2">();</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Thank you for using the system&quot;</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">exit</span><span class="s2">(</span><span class="s4">0</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+        <span class="s2">}</span>
+
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static </span><span class="s2">&lt;</span><span class="s1">Stundent</span><span class="s2">&gt; </span><span class="s0">void </span><span class="s1">subjects</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s1">Lecturer lecturer </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Lecturer</span><span class="s2">(</span><span class="s1">account</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">(), </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">());</span>
+        <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Subject</span><span class="s2">&gt; </span><span class="s1">subjects_array </span><span class="s2">= </span><span class="s1">lecturer</span><span class="s2">.</span><span class="s1">getCourses</span><span class="s2">();</span>
+        <span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s4">1</span><span class="s2">;</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;0) BACK&quot;</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Subject subject </span><span class="s2">: </span><span class="s1">subjects_array</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">&quot;) &quot; </span><span class="s2">+ </span><span class="s1">subject</span><span class="s2">.</span><span class="s1">getSubject_name</span><span class="s2">());</span>
+            <span class="s1">i</span><span class="s2">++;</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;input subject you want&quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner input </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">input</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s4">0</span><span class="s2">) {</span>
+            <span class="s1">lecturerLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">subject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subjects_array</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">choice </span><span class="s2">- </span><span class="s4">1</span><span class="s2">));</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">subject</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Exams&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Students&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Grades&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) Back&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">exams</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s1">Integer id </span><span class="s2">: </span><span class="s1">subject</span><span class="s2">.</span><span class="s1">getStudent_ids</span><span class="s2">()) {</span>
+                    <span class="s1">String name </span><span class="s2">= </span><span class="s1">AccountDatabase</span><span class="s2">.</span><span class="s1">searchAccounts</span><span class="s2">(</span><span class="s3">&quot;id&quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">valueOf</span><span class="s2">(</span><span class="s1">id</span><span class="s2">)).</span><span class="s1">getFirst</span><span class="s2">().</span><span class="s1">getName</span><span class="s2">();</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Name: &quot; </span><span class="s2">+ </span><span class="s1">name </span><span class="s2">+ </span><span class="s3">&quot; ID:&quot; </span><span class="s2">+ </span><span class="s1">id</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s1">subject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">studentGrades</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s1">subjects</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">studentGrades</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Integer id </span><span class="s2">: </span><span class="s1">subject</span><span class="s2">.</span><span class="s1">getStudent_ids</span><span class="s2">()) {</span>
+            <span class="s1">Account studentAccount </span><span class="s2">= </span><span class="s1">AccountDatabase</span><span class="s2">.</span><span class="s1">searchAccounts</span><span class="s2">(</span><span class="s3">&quot;id&quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">valueOf</span><span class="s2">(</span><span class="s1">id</span><span class="s2">)).</span><span class="s1">getFirst</span><span class="s2">();</span>
+            <span class="s1">Student student </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Student</span><span class="s2">(</span><span class="s1">studentAccount</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">(), </span><span class="s1">studentAccount</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">());</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Name: &quot; </span><span class="s2">+ </span><span class="s1">studentAccount</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">() + </span><span class="s3">&quot; ID: &quot; </span><span class="s2">+ </span><span class="s1">id </span><span class="s2">+ </span><span class="s3">&quot; Grade: &quot; </span><span class="s2">+ </span><span class="s1">student</span><span class="s2">.</span><span class="s1">getGradesById</span><span class="s2">().</span><span class="s1">get</span><span class="s2">(</span><span class="s1">subject</span><span class="s2">.</span><span class="s1">getSubject_id</span><span class="s2">()) + </span><span class="s3">&quot;%&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;0) Back&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) input student id you want to add a report too&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">0</span><span class="s2">:</span>
+                <span class="s1">subject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">exam</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Exam exam</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Questions&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Grades&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Students&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) duration&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;5) Back&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">questions</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">examGrades</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">joinedExam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Exam duration: &quot; </span><span class="s2">+ </span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getDuration</span><span class="s2">());</span>
+                <span class="s1">Scanner sc2 </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter duration and 0 to keep default &quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">duration </span><span class="s2">= </span><span class="s1">sc2</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">duration </span><span class="s2">== </span><span class="s4">0</span><span class="s2">) {</span>
+                    <span class="s1">exam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">exam</span><span class="s2">.</span><span class="s1">setDuration</span><span class="s2">(</span><span class="s1">duration</span><span class="s2">);</span>
+                    <span class="s1">exam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+            <span class="s0">case </span><span class="s4">5</span><span class="s2">:</span>
+                <span class="s1">exams</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">joinedExam</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Exam exam</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">&gt; </span><span class="s1">students </span><span class="s2">= </span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getIdsOfWhoJoined</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Integer id </span><span class="s2">: </span><span class="s1">students</span><span class="s2">) {</span>
+            <span class="s1">String name </span><span class="s2">= </span><span class="s1">AccountDatabase</span><span class="s2">.</span><span class="s1">searchAccounts</span><span class="s2">(</span><span class="s3">&quot;id&quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">valueOf</span><span class="s2">(</span><span class="s1">id</span><span class="s2">)).</span><span class="s1">getFirst</span><span class="s2">().</span><span class="s1">getName</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Name :&quot; </span><span class="s2">+ </span><span class="s1">name </span><span class="s2">+ </span><span class="s3">&quot; ID:&quot; </span><span class="s2">+ </span><span class="s1">id</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;0) Back&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Allow student to retake exam&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">0</span><span class="s2">:</span>
+                <span class="s1">exam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input Student ID&quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s1">students</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                <span class="s1">exam</span><span class="s2">.</span><span class="s1">setIdsOfWhoJoined</span><span class="s2">(</span><span class="s1">students</span><span class="s2">);</span>
+                <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                <span class="s1">joinedExam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">examGrades</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Exam exam</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">HashMap</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">, </span><span class="s1">Integer</span><span class="s2">&gt; </span><span class="s1">grades </span><span class="s2">= </span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getGrades</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Map</span><span class="s2">.</span><span class="s1">Entry</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">, </span><span class="s1">Integer</span><span class="s2">&gt; </span><span class="s1">grade </span><span class="s2">: </span><span class="s1">grades</span><span class="s2">.</span><span class="s1">entrySet</span><span class="s2">()) {</span>
+            <span class="s1">String name </span><span class="s2">= </span><span class="s1">AccountDatabase</span><span class="s2">.</span><span class="s1">searchAccounts</span><span class="s2">(</span><span class="s3">&quot;id&quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">valueOf</span><span class="s2">(</span><span class="s1">grade</span><span class="s2">.</span><span class="s1">getKey</span><span class="s2">())).</span><span class="s1">get</span><span class="s2">(</span><span class="s4">0</span><span class="s2">).</span><span class="s1">getName</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Name :&quot; </span><span class="s2">+ </span><span class="s1">name </span><span class="s2">+ </span><span class="s3">&quot; ID:&quot; </span><span class="s2">+ </span><span class="s1">grade</span><span class="s2">.</span><span class="s1">getKey</span><span class="s2">() + </span><span class="s3">&quot; Grade: &quot; </span><span class="s2">+ </span><span class="s1">grade</span><span class="s2">.</span><span class="s1">getValue</span><span class="s2">());</span>
+        <span class="s2">}</span>
+
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;0) Back&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Change ids Grade&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) View Ids answer&quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s4">0</span><span class="s2">) {</span>
+            <span class="s1">exam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s4">1</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input Id of grade you want to change&quot;</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">grades</span><span class="s2">.</span><span class="s1">containsKey</span><span class="s2">(</span><span class="s1">id</span><span class="s2">)) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Grade Now: &quot; </span><span class="s2">+ </span><span class="s1">grades</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">id</span><span class="s2">));</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input the new grade&quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">newGrade </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s1">grades</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">id</span><span class="s2">, </span><span class="s1">newGrade</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Grade Updated&quot;</span><span class="s2">);</span>
+                <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                <span class="s1">examGrades</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Grade Not Found&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+
+
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s4">2</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input Id student to see his exam&quot;</span><span class="s2">);</span>
+            <span class="s1">Scanner sc2 </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">sc2</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s1">Question question </span><span class="s2">: </span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getQuestions</span><span class="s2">().</span><span class="s1">values</span><span class="s2">()) {</span>
+                <span class="s1">displayQuestion</span><span class="s2">(</span><span class="s1">question</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Student answer: &quot; </span><span class="s2">+ </span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getAnswers</span><span class="s2">().</span><span class="s1">get</span><span class="s2">(</span><span class="s1">id</span><span class="s2">).</span><span class="s1">get</span><span class="s2">(</span><span class="s1">question</span><span class="s2">.</span><span class="s1">getQuestion_number</span><span class="s2">()));</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Correct answer: &quot; </span><span class="s2">+ </span><span class="s1">question</span><span class="s2">.</span><span class="s1">getQuestion_answer</span><span class="s2">());</span>
+            <span class="s2">}</span>
+            <span class="s1">examGrades</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">displayQuestion</span><span class="s2">(</span><span class="s1">Question question</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">question</span><span class="s2">.</span><span class="s1">getQuestion_number</span><span class="s2">() + </span><span class="s3">&quot;) &quot; </span><span class="s2">+ </span><span class="s1">question</span><span class="s2">.</span><span class="s1">getQuestion</span><span class="s2">());</span>
+        <span class="s1">HashMap</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">, </span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">options </span><span class="s2">= </span><span class="s1">question</span><span class="s2">.</span><span class="s1">getOptions</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Integer key </span><span class="s2">: </span><span class="s1">options</span><span class="s2">.</span><span class="s1">keySet</span><span class="s2">()) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">key </span><span class="s2">+ </span><span class="s3">&quot;. &quot; </span><span class="s2">+ </span><span class="s1">options</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">key</span><span class="s2">));</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">questions</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Exam exam</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;0) Add Question&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;-1) back&quot;</span><span class="s2">);</span>
+        <span class="s1">HashMap</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">, </span><span class="s1">Question</span><span class="s2">&gt; </span><span class="s1">questionsMap </span><span class="s2">= </span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getQuestions</span><span class="s2">();</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Map</span><span class="s2">.</span><span class="s1">Entry</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">, </span><span class="s1">Question</span><span class="s2">&gt; </span><span class="s1">question </span><span class="s2">: </span><span class="s1">questionsMap</span><span class="s2">.</span><span class="s1">entrySet</span><span class="s2">()) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">question</span><span class="s2">.</span><span class="s1">getKey</span><span class="s2">() + </span><span class="s3">&quot;) &quot; </span><span class="s2">+ </span><span class="s1">question</span><span class="s2">.</span><span class="s1">getValue</span><span class="s2">().</span><span class="s1">getQuestion</span><span class="s2">());</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s4">0</span><span class="s2">) {</span>
+            <span class="s1">addQuestion</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== -</span><span class="s4">1</span><span class="s2">) {</span>
+            <span class="s1">exam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s0">try </span><span class="s2">{</span>
+                <span class="s1">question</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">questionsMap</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">choice</span><span class="s2">), </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s2">}</span>
+
+
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">question</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Question question</span><span class="s2">, </span><span class="s1">Exam exam</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) </span><span class="s0">throws </span><span class="s1">Exception </span><span class="s2">{</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">question</span><span class="s2">.</span><span class="s1">getQuestion</span><span class="s2">());</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Manage Options&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Change Question&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Delete Question&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) Back&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice: &quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">optionsManager</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">question</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input the new question to replace&quot;</span><span class="s2">);</span>
+                <span class="s1">Scanner sc2 </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+                <span class="s1">String newQuestion </span><span class="s2">= </span><span class="s1">sc2</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+                <span class="s1">question</span><span class="s2">.</span><span class="s1">setQuestion</span><span class="s2">(</span><span class="s1">newQuestion</span><span class="s2">);</span>
+                <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                <span class="s1">question</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">question</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Are you sure you want to delete?&quot;</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter your choice (1 = Delete, 0 = Back): &quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">choice1 </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice1</span><span class="s2">) {</span>
+                    <span class="s0">case </span><span class="s4">0</span><span class="s2">:</span>
+                        <span class="s1">question</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">question</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                        <span class="s1">exam</span><span class="s2">.</span><span class="s1">removeQuestion</span><span class="s2">(</span><span class="s1">question</span><span class="s2">);</span>
+                        <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Question deleted successfully&quot;</span><span class="s2">);</span>
+                        <span class="s1">questions</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                <span class="s2">}</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s1">questions</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">addQuestion</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Exam exam</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input the question&quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">String buff </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s1">Question question </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Question</span><span class="s2">(</span><span class="s1">buff</span><span class="s2">);</span>
+        <span class="s1">optionsManager</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">question</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">optionsManager</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Question question</span><span class="s2">, </span><span class="s1">Exam exam</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Map</span><span class="s2">.</span><span class="s1">Entry</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">, </span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">option </span><span class="s2">: </span><span class="s1">question</span><span class="s2">.</span><span class="s1">getOptions</span><span class="s2">().</span><span class="s1">entrySet</span><span class="s2">()) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Option number: &quot; </span><span class="s2">+ </span><span class="s1">option</span><span class="s2">.</span><span class="s1">getKey</span><span class="s2">() + </span><span class="s3">&quot;) &quot; </span><span class="s2">+ </span><span class="s1">option</span><span class="s2">.</span><span class="s1">getValue</span><span class="s2">());</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Add Option&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;2) Delete Option&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;3) Set Option as answer&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;4) Save question&quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">choice</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s4">1</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input the new option&quot;</span><span class="s2">);</span>
+                <span class="s1">Scanner sc2 </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+                <span class="s1">String optionText </span><span class="s2">= </span><span class="s1">sc2</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+                <span class="s1">Option option </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Option</span><span class="s2">(</span><span class="s1">optionText</span><span class="s2">);</span>
+                <span class="s1">question</span><span class="s2">.</span><span class="s1">addOption</span><span class="s2">(</span><span class="s1">option</span><span class="s2">);</span>
+                <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                <span class="s1">optionsManager</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">question</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">2</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input the option number you want to delete &quot;</span><span class="s2">);</span>
+                <span class="s0">int </span><span class="s1">optionNumber </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+                <span class="s1">question</span><span class="s2">.</span><span class="s1">removeOption</span><span class="s2">(</span><span class="s1">optionNumber </span><span class="s2">+ </span><span class="s4">1</span><span class="s2">);</span>
+                <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                <span class="s1">optionsManager</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">question</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">3</span><span class="s2">:</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Input the answer you want to set &quot;</span><span class="s2">);</span>
+                <span class="s1">String answer </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">next</span><span class="s2">();</span>
+                <span class="s1">question</span><span class="s2">.</span><span class="s1">setQuestion_answer</span><span class="s2">(</span><span class="s1">answer</span><span class="s2">);</span>
+                <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                <span class="s1">optionsManager</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">question</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s4">4</span><span class="s2">:</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">question</span><span class="s2">.</span><span class="s1">getQuestion_number</span><span class="s2">() == </span><span class="s4">0</span><span class="s2">) {</span>
+                    <span class="s1">exam</span><span class="s2">.</span><span class="s1">addQuestion</span><span class="s2">(</span><span class="s1">question</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">updateExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">exam</span><span class="s2">);</span>
+                <span class="s1">questions</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+                <span class="s0">break</span><span class="s2">;</span>
+
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private static void </span><span class="s1">addExam</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">Exam exam </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Exam</span><span class="s2">();</span>
+        <span class="s1">exam</span><span class="s2">.</span><span class="s1">setSubjectID</span><span class="s2">(</span><span class="s1">subject</span><span class="s2">.</span><span class="s1">getSubject_id</span><span class="s2">());</span>
+        <span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">insertExam</span><span class="s2">(</span><span class="s1">exam</span><span class="s2">);</span>
+        <span class="s1">exam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exam</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">exams</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">, </span><span class="s1">Subject subject</span><span class="s2">) {</span>
+        <span class="s1">ArrayList</span><span class="s2">&lt;</span><span class="s1">Exam</span><span class="s2">&gt; </span><span class="s1">exams </span><span class="s2">= </span><span class="s1">ExamDatabase</span><span class="s2">.</span><span class="s1">getExamsBySubjectId</span><span class="s2">(</span><span class="s1">subject</span><span class="s2">.</span><span class="s1">getSubject_id</span><span class="s2">());</span>
+        <span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s4">2</span><span class="s2">;</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;0) BACK&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;1) Add Exam&quot;</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Exam exam </span><span class="s2">: </span><span class="s1">exams</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">i </span><span class="s2">+ </span><span class="s3">&quot;) Exam's ID: &quot; </span><span class="s2">+ </span><span class="s1">exam</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">());</span>
+            <span class="s1">i</span><span class="s2">++;</span>
+        <span class="s2">}</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;input subject you want&quot;</span><span class="s2">);</span>
+        <span class="s1">Scanner input </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">choice </span><span class="s2">= </span><span class="s1">input</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s4">0</span><span class="s2">) {</span>
+            <span class="s1">subject</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">choice </span><span class="s2">== </span><span class="s4">1</span><span class="s2">) {</span>
+            <span class="s1">addExam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">subject</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">exam</span><span class="s2">(</span><span class="s1">account</span><span class="s2">, </span><span class="s1">exams</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">choice </span><span class="s2">- </span><span class="s4">2</span><span class="s2">), </span><span class="s1">subject</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">alterEmailAndPass</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter 0 in mail to exit: &quot;</span><span class="s2">);</span>
+
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter mail: &quot;</span><span class="s2">);</span>
+            <span class="s1">String mail </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">Objects</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">mail</span><span class="s2">, </span><span class="s3">&quot;0&quot;</span><span class="s2">)) {</span>
+                <span class="s1">lecturerLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter password: &quot;</span><span class="s2">);</span>
+            <span class="s1">String password </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Confirm password: &quot;</span><span class="s2">);</span>
+            <span class="s1">String passwordConfirm </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">password</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">passwordConfirm</span><span class="s2">)) {</span>
+                <span class="s1">account</span><span class="s2">.</span><span class="s1">setMail</span><span class="s2">(</span><span class="s1">mail</span><span class="s2">);</span>
+                <span class="s1">account</span><span class="s2">.</span><span class="s1">setPassword</span><span class="s2">(</span><span class="s1">password</span><span class="s2">);</span>
+                <span class="s1">Administrative</span><span class="s2">.</span><span class="s1">updateUser</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Your account has been updated&quot;</span><span class="s2">);</span>
+                <span class="s1">lecturerLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Passwords do not match&quot;</span><span class="s2">);</span>
+                <span class="s1">alterEmailAndPass</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

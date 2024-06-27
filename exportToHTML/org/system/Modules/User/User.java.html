@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>User.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c792ea; font-style: italic;}
+.s1 { color: #c3cee3;}
+.s2 { color: #89ddff;}
+.s3 { color: #c3e88d;}
+.s4 { color: #717cb4; font-style: italic;}
+.s5 { color: #f78c6c;}
+</style>
+</head>
+<body bgcolor="#0f111a">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+User.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">Message</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">MessagingException</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">Session</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">Transport</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">internet</span><span class="s2">.</span><span class="s1">InternetAddress</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">internet</span><span class="s2">.</span><span class="s1">MimeMessage</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Account</span><span class="s2">.</span><span class="s1">AccountDatabase</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Exam</span><span class="s2">.</span><span class="s1">ExamDatabase</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Subject</span><span class="s2">.</span><span class="s1">SubjectDatabase</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Properties</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Scanner</span><span class="s2">;</span>
+
+<span class="s0">import static </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">.</span><span class="s1">AdminMenu</span><span class="s2">.</span><span class="s1">adminLogin</span><span class="s2">;</span>
+<span class="s0">import static </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">.</span><span class="s1">LecturerMenu</span><span class="s2">.</span><span class="s1">lecturerLogin</span><span class="s2">;</span>
+<span class="s0">import static </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">.</span><span class="s1">StudentMenu</span><span class="s2">.</span><span class="s1">studentLogin</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">User </span><span class="s2">{</span>
+    <span class="s0">public static void </span><span class="s1">start</span><span class="s2">() {</span>
+        <span class="s1">AccountDatabase accountDatabase </span><span class="s2">= </span><span class="s0">new </span><span class="s1">AccountDatabase</span><span class="s2">();</span>
+        <span class="s1">SubjectDatabase subjectDatabase </span><span class="s2">= </span><span class="s0">new </span><span class="s1">SubjectDatabase</span><span class="s2">();</span>
+        <span class="s1">ExamDatabase examDatabase </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ExamDatabase</span><span class="s2">();</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter user email: &quot;</span><span class="s2">);</span>
+        <span class="s1">String email </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Enter the password: &quot;</span><span class="s2">);</span>
+        <span class="s1">String password </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+        <span class="s1">User</span><span class="s2">.</span><span class="s1">login</span><span class="s2">(</span><span class="s1">email</span><span class="s2">, </span><span class="s1">password</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static void </span><span class="s1">login</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">, </span><span class="s1">String password</span><span class="s2">) {</span>
+        <span class="s1">Account account </span><span class="s2">= </span><span class="s1">AccountDatabase</span><span class="s2">.</span><span class="s1">checkLogin</span><span class="s2">(</span><span class="s1">email</span><span class="s2">, </span><span class="s1">password</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">account </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">account</span><span class="s2">.</span><span class="s1">getStatus</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;activated&quot;</span><span class="s2">)) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">account</span><span class="s2">.</span><span class="s1">getVerificationStatus</span><span class="s2">()) {</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">account</span><span class="s2">.</span><span class="s1">getUserRole</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;admin&quot;</span><span class="s2">)) {</span>
+                        <span class="s1">adminLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                    <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">account</span><span class="s2">.</span><span class="s1">getUserRole</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;student&quot;</span><span class="s2">)) {</span>
+                        <span class="s1">studentLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                    <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">account</span><span class="s2">.</span><span class="s1">getUserRole</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s3">&quot;lecturer&quot;</span><span class="s2">)) {</span>
+                        <span class="s1">lecturerLogin</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                    <span class="s2">}</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">verify</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+                <span class="s2">}</span>
+
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Your account is not activated please contact your admin&quot;</span><span class="s2">);</span>
+                <span class="s1">start</span><span class="s2">();</span>
+            <span class="s2">}</span>
+
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Invalid User&quot;</span><span class="s2">);</span>
+            <span class="s1">start</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">public static void </span><span class="s1">sendEmail</span><span class="s2">(</span><span class="s1">String mail</span><span class="s2">, </span><span class="s0">int </span><span class="s1">code</span><span class="s2">) {</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;A code will be sent to your email address: &quot; </span><span class="s2">+ </span><span class="s1">mail</span><span class="s2">);</span>
+
+        <span class="s1">String recipient </span><span class="s2">= </span><span class="s1">mail</span><span class="s2">;</span>
+        <span class="s1">String sender </span><span class="s2">= </span><span class="s3">&quot;Adhams.botmail@gmail.com&quot;</span><span class="s2">;</span>
+        <span class="s1">String host </span><span class="s2">= </span><span class="s3">&quot;smtp.gmail.com&quot;</span><span class="s2">;</span>
+
+        <span class="s4">// Get system properties</span>
+        <span class="s1">Properties properties </span><span class="s2">= </span><span class="s1">System</span><span class="s2">.</span><span class="s1">getProperties</span><span class="s2">();</span>
+
+        <span class="s4">// Setup mail server</span>
+        <span class="s1">properties</span><span class="s2">.</span><span class="s1">setProperty</span><span class="s2">(</span><span class="s3">&quot;mail.smtp.host&quot;</span><span class="s2">, </span><span class="s1">host</span><span class="s2">);</span>
+        <span class="s1">properties</span><span class="s2">.</span><span class="s1">setProperty</span><span class="s2">(</span><span class="s3">&quot;mail.smtp.port&quot;</span><span class="s2">, </span><span class="s3">&quot;587&quot;</span><span class="s2">); </span><span class="s4">// or your SMTP port</span>
+        <span class="s1">properties</span><span class="s2">.</span><span class="s1">setProperty</span><span class="s2">(</span><span class="s3">&quot;mail.smtp.auth&quot;</span><span class="s2">, </span><span class="s3">&quot;true&quot;</span><span class="s2">);</span>
+        <span class="s1">properties</span><span class="s2">.</span><span class="s1">setProperty</span><span class="s2">(</span><span class="s3">&quot;mail.smtp.starttls.enable&quot;</span><span class="s2">, </span><span class="s3">&quot;true&quot;</span><span class="s2">);</span>
+
+        <span class="s4">// Get the default Session object.</span>
+        <span class="s1">Session session </span><span class="s2">= </span><span class="s1">Session</span><span class="s2">.</span><span class="s1">getInstance</span><span class="s2">(</span><span class="s1">properties</span><span class="s2">, </span><span class="s0">new </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">Authenticator</span><span class="s2">() {</span>
+            <span class="s0">protected </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">PasswordAuthentication getPasswordAuthentication</span><span class="s2">() {</span>
+                <span class="s0">return new </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">mail</span><span class="s2">.</span><span class="s1">PasswordAuthentication</span><span class="s2">(</span><span class="s3">&quot;Adhams.botmail@gmail.com&quot;</span><span class="s2">, </span><span class="s3">&quot;dxqx flmj ymlx srzx&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s4">// Create a default MimeMessage object.</span>
+            <span class="s1">MimeMessage message </span><span class="s2">= </span><span class="s0">new </span><span class="s1">MimeMessage</span><span class="s2">(</span><span class="s1">session</span><span class="s2">);</span>
+
+            <span class="s4">// Set From: header field of the header.</span>
+            <span class="s1">message</span><span class="s2">.</span><span class="s1">setFrom</span><span class="s2">(</span><span class="s0">new </span><span class="s1">InternetAddress</span><span class="s2">(</span><span class="s1">sender</span><span class="s2">));</span>
+
+            <span class="s4">// Set To: header field of the header.</span>
+            <span class="s1">message</span><span class="s2">.</span><span class="s1">addRecipient</span><span class="s2">(</span><span class="s1">Message</span><span class="s2">.</span><span class="s1">RecipientType</span><span class="s2">.</span><span class="s1">TO</span><span class="s2">, </span><span class="s0">new </span><span class="s1">InternetAddress</span><span class="s2">(</span><span class="s1">recipient</span><span class="s2">));</span>
+
+            <span class="s4">// Set Subject: header field</span>
+            <span class="s1">message</span><span class="s2">.</span><span class="s1">setSubject</span><span class="s2">(</span><span class="s3">&quot;Verification Code&quot;</span><span class="s2">);</span>
+
+            <span class="s4">// Set the actual message</span>
+            <span class="s1">message</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;Your Verification code is: &quot; </span><span class="s2">+ </span><span class="s1">code</span><span class="s2">);</span>
+
+            <span class="s4">// Send message</span>
+            <span class="s1">Transport</span><span class="s2">.</span><span class="s1">send</span><span class="s2">(</span><span class="s1">message</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Sent message successfully....&quot;</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">MessagingException mex</span><span class="s2">) {</span>
+            <span class="s1">mex</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static int </span><span class="s1">generateRandomNumber</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s2">(</span><span class="s0">int</span><span class="s2">) (</span><span class="s1">Math</span><span class="s2">.</span><span class="s1">random</span><span class="s2">() * </span><span class="s5">900000</span><span class="s2">) + </span><span class="s5">100000</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">verify</span><span class="s2">(</span><span class="s1">Account account</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">code </span><span class="s2">= </span><span class="s1">generateRandomNumber</span><span class="s2">();</span>
+        <span class="s1">String mail </span><span class="s2">= </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getMail</span><span class="s2">();</span>
+        <span class="s1">sendEmail</span><span class="s2">(</span><span class="s1">mail</span><span class="s2">, </span><span class="s1">code</span><span class="s2">);</span>
+        <span class="s1">Scanner sc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Please enter the verification code: &quot;</span><span class="s2">);</span>
+        <span class="s0">int </span><span class="s1">input </span><span class="s2">= </span><span class="s1">sc</span><span class="s2">.</span><span class="s1">nextInt</span><span class="s2">();</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">input </span><span class="s2">== </span><span class="s1">code</span><span class="s2">) {</span>
+            <span class="s1">AccountDatabase</span><span class="s2">.</span><span class="s1">verifyAccount</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Your account has been verified&quot;</span><span class="s2">);</span>
+            <span class="s1">login</span><span class="s2">(</span><span class="s1">account</span><span class="s2">.</span><span class="s1">getMail</span><span class="s2">(), </span><span class="s1">account</span><span class="s2">.</span><span class="s1">getPassword</span><span class="s2">());</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Wrong code try again&quot;</span><span class="s2">);</span>
+            <span class="s1">verify</span><span class="s2">(</span><span class="s1">account</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+
+    <span class="s2">}</span>
+
+
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

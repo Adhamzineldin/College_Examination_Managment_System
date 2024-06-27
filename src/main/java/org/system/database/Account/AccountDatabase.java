@@ -6,21 +6,31 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 import static org.system.Modules.User.TitleCase.toTitleCase;
 
 public class AccountDatabase extends Database {
 
     public AccountDatabase() {
-        createTable();
-        if (!isEmailUsed("Mohalya3@gmail.com")) {
-            Account account = new Account("Adham Zineldin", "Mohalya3@gmail.com", "123456789", "admin", "activated");
+
+        if (createTable()) {
+            System.out.println("No admin account creating one");
+            System.out.println("Enter Name");
+            Scanner sc = new Scanner(System.in);
+            String name = sc.nextLine();
+            System.out.println("Enter email");
+            String email = sc.nextLine();
+            System.out.println("Enter Password");
+            String password = sc.nextLine();
+            Account account = new Account(name, email, password, "admin", "activated");
             insertAccount(account);
         }
 
     }
 
-    private void createTable() {
+    private boolean createTable() {
+        boolean tableCreated = false;
         try {
             // Load the SQLite JDBC driver class
             Class.forName("org.sqlite.JDBC");
@@ -28,8 +38,15 @@ public class AccountDatabase extends Database {
             // Establish a connection to the database
             connection = DriverManager.getConnection(url);
 
+            // Check if the table already exists
+            if (tableExists("Accounts")) {
+                // Table already exists
+                System.out.println("Table 'Accounts' already exists.");
+                return false;
+            }
+
             // Create a table if it doesn't exist
-            String sql = "CREATE TABLE IF NOT EXISTS Accounts ("
+            String sql = "CREATE TABLE Accounts ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + "name TEXT NOT NULL,"
                     + "mail TEXT NOT NULL UNIQUE,"
@@ -40,13 +57,26 @@ public class AccountDatabase extends Database {
 
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute(sql);
+                tableCreated = true; // Set flag if table creation succeeds
             }
         } catch (ClassNotFoundException e) {
             System.out.println("SQLite JDBC driver not found.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            // Close connection if needed
+            closeConnection();
+        }
+        return tableCreated;
+    }
+
+    private boolean tableExists(String tableName) throws SQLException {
+        DatabaseMetaData metaData = connection.getMetaData();
+        try (ResultSet rs = metaData.getTables(null, null, tableName, null)) {
+            return rs.next();
         }
     }
+
 
     public static void insertAccount(Account account) throws IllegalArgumentException {
         if (account == null) {

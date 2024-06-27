@@ -1,16 +1,40 @@
 package org.system.database;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
     protected static Connection connection = null;
-    protected static final String url = "jdbc:sqlite:src/main/java/org/system/database/database.db";
+    protected static String dbPath;
+    protected static String url;
+
+    static {
+        // Set the path to the database file
+        dbPath = new File("src/main/java/org/system/database/database.db").getAbsolutePath();
+        url = "jdbc:sqlite:" + dbPath;
+
+        // Ensure the database file exists, creating it if necessary
+        ensureDatabaseFileExists();
+    }
+
+    // Method to ensure the database file exists
+    private static void ensureDatabaseFileExists() {
+        File dbFile = new File(dbPath);
+        if (!dbFile.exists()) {
+            try {
+                if (dbFile.getParentFile().mkdirs()) {
+                    System.out.println("Created directory: " + dbFile.getParentFile());
+                }
+                if (dbFile.createNewFile()) {
+                    System.out.println("Created new database file: " + dbPath);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     protected static void openConnection() {
         try {
@@ -41,7 +65,6 @@ public class Database {
         return null;
     }
 
-    // Method to deserialize a byte array to an object
     protected static Object deserializeObject(byte[] data) {
         try (ByteArrayInputStream bis = new ByteArrayInputStream(data);
              ObjectInputStream ois = new ObjectInputStream(bis)) {
@@ -51,9 +74,10 @@ public class Database {
         }
         return null;
     }
-    
 
     public static void main(String[] args) {
+        openConnection();
+        // You can add code here to test the connection or perform database operations
+        closeConnection();
     }
-
 }

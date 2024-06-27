@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>TitleCase.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #c792ea; font-style: italic;}
+.s1 { color: #c3cee3;}
+.s2 { color: #89ddff;}
+</style>
+</head>
+<body bgcolor="#0f111a">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TitleCase.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">org</span><span class="s2">.</span><span class="s1">system</span><span class="s2">.</span><span class="s1">Modules</span><span class="s2">.</span><span class="s1">User</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">TitleCase </span><span class="s2">{</span>
+    <span class="s0">public static </span><span class="s1">String toTitleCase</span><span class="s2">(</span><span class="s1">String input</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">input </span><span class="s2">== </span><span class="s0">null </span><span class="s2">|| </span><span class="s1">input</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+            <span class="s0">return </span><span class="s1">input</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">StringBuilder titleCase </span><span class="s2">= </span><span class="s0">new </span><span class="s1">StringBuilder</span><span class="s2">();</span>
+        <span class="s0">boolean </span><span class="s1">nextTitleCase </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">char </span><span class="s1">c </span><span class="s2">: </span><span class="s1">input</span><span class="s2">.</span><span class="s1">toCharArray</span><span class="s2">()) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">Character</span><span class="s2">.</span><span class="s1">isSpaceChar</span><span class="s2">(</span><span class="s1">c</span><span class="s2">)) {</span>
+                <span class="s1">nextTitleCase </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+            <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">nextTitleCase</span><span class="s2">) {</span>
+                <span class="s1">c </span><span class="s2">= </span><span class="s1">Character</span><span class="s2">.</span><span class="s1">toTitleCase</span><span class="s2">(</span><span class="s1">c</span><span class="s2">);</span>
+                <span class="s1">nextTitleCase </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
+            <span class="s2">}</span>
+
+            <span class="s1">titleCase</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s1">c</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+        <span class="s0">return </span><span class="s1">titleCase</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">();</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

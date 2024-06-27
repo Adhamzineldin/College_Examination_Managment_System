@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="College_Examination_Managment_System:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/College_Examination_Managment_System_jar</output-path>
+    <root id="archive" name="College_Examination_Managment_System.jar">
+      <element id="module-output" name="College_Examination_Managment_System" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/xerial/sqlite-jdbc/3.41.2.2/sqlite-jdbc-3.41.2.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/mail/jakarta.mail/2.0.1/jakarta.mail-2.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/activation/jakarta.activation/2.0.1/jakarta.activation-2.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
