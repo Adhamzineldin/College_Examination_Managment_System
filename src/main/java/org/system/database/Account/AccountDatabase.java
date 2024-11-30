@@ -41,7 +41,7 @@ public class AccountDatabase extends Database {
             // Check if the table already exists
             if (tableExists("Accounts")) {
                 // Table already exists
-                System.out.println("Table 'Accounts' already exists.");
+                
                 return false;
             }
 

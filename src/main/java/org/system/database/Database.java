@@ -24,12 +24,8 @@ public class Database {
         File dbFile = new File(dbPath);
         if (!dbFile.exists()) {
             try {
-                if (dbFile.getParentFile().mkdirs()) {
-                    System.out.println("Created directory: " + dbFile.getParentFile());
-                }
-                if (dbFile.createNewFile()) {
-                    System.out.println("Created new database file: " + dbPath);
-                }
+                dbFile.getParentFile().mkdirs();
+                dbFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }

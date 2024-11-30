@@ -11,16 +11,14 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Specify the main class for jpackage -->
-        <mainClass>org.example.MainClass</mainClass>
     </properties>
 
     <dependencies>
-        <!-- Add your dependencies here -->
+        <!-- SQLite JDBC Driver -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.41.2.2</version>
+            <version>3.41.2.2</version> <!-- Use the latest version available -->
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -34,44 +32,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <!-- Maven JAR Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>${mainClass}</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-
-            <!-- Maven JPackage Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jpackage-plugin</artifactId>
-                <version>0.5.1</version>
-                <executions>
-                    <execution>
-                        <id>create-installer</id>
-                        <goals>
-                            <goal>build-jpackage</goal>
-                        </goals>
-                        <configuration>
-                            <type>exe</type>
-                            <appName>College_Examination_Management_System</appName>
-                            <mainClass>${mainClass}</mainClass>
-                            <outputDirectory>${project.build.directory}/jpackage-output</outputDirectory>
-                            <!-- Adjust other options as needed -->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
